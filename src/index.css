@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.primary-text{
+    @apply font-medium text-gray-600
+}
+.primary-bg{
+    @apply bg-[#040404]
+}

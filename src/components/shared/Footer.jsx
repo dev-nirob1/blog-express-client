@@ -1,9 +1,8 @@
 
 const Footer = () => {
     return (
-        <footer className="bg-[#040404] py-6 text-gray-300">
+        <footer className="primary-bg py-6 text-gray-300">
             <div className="container mx-auto flex flex-wrap justify-between items-start px-4 py-5 font-medium">
-                {/* Column 1 */}
                 <div className="w-full md:w-1/4 mb-6 md:mb-0">
                     <div className="flex items-center mb-7">
                         <h1 className="font-semibold text-3xl h-8 animate-pulse font-serif"><span className="text-blue-600 font-bold">Blog</span>Express</h1>
@@ -11,7 +10,6 @@ const Footer = () => {
                     <p className="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
                 </div>
 
-                {/* Column 2 */}
                 <div className="w-full md:w-1/4 mb-6 md:mb-0">
                     <h4 className="mb-3 text-lg">Quick Links</h4>
                     <ul className="text-sm space-y-2">
@@ -22,7 +20,6 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                {/* Column 3 */}
                 <div className="w-full md:w-2/4">
                     <h4 className="mb-3">Subscribe to Our Newsletter</h4>
                     <div className="flex items-center">
