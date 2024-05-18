@@ -3,7 +3,7 @@ import { FaGithubSquare } from "react-icons/fa";
 import moment from 'moment-timezone';
 
 const TopNavbar = () => {
-  const formattedDate = moment().format('ddd, YYYY-MM-DD');
+  const formattedDate = moment().format('ddd, DD-MM-YY');
   const formattedTime = moment().format('hh:mm A');
 
     return (

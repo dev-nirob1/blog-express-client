@@ -18,7 +18,7 @@ const BottomNabvar = () => {
                         <Link to='/'>Home</Link>
                     </li>
                     <div onClick={handletoggle} className='flex items-center gap-1 cursor-pointer relative'>
-                        <span>Category</span>
+                        <span>Categories</span>
                         {open ? <FaAngleUp /> : <FaAngleDown />}
                         <ul className={`${!open? 'hidden': 'absolute'} top-11 left-0 bg-[#040404] w-48 rounded-b-lg shadow-lg z-10`}>
                             <li className='border-b border-gray-800'>
