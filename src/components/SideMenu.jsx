@@ -1,8 +1,11 @@
+import PopularPost from "./PopularPost";
+import SocialMedia from "./SocialMedia";
 
 const SideMenu = () => {
     return (
-        <div className="border p-5 rounded-lg">
-            this is sidebar
+        <div className="p-5">
+            <PopularPost/>
+            <SocialMedia/>
         </div>
     );
 };
