@@ -6,7 +6,7 @@ const Home = () => {
     return (
         <div>
             <Banner />
-            <div className="grid grid-cols-3 gap-5 container mx-auto my-16">
+            <div className="grid lg:grid-cols-3 gap-5 container mx-auto my-16">
                 <div className="col-span-2">
                     <MainContent />
                 </div>
