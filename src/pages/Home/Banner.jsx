@@ -8,9 +8,9 @@ const Banner = () => {
                         "url('/banner.jpg')"
                 }}>
                     <div className="flex items-center justify-center h-full">
-                        <div className="w-[480px] flex items-center">
+                        <div className="w-[480px] flex items-center px-5 md:px-0">
                             <input type="text" className="px-5 py-3 rounded-l-full outline-none w-full" placeholder="Enter the keyword..." />
-                            <button className="px-7 py-3 rounded-r-full bg-[#040404] font-medium text-gray-200 hover:bg-neutral-900">Search</button>
+                            <button className="px-9 py-3 rounded-r-full bg-[#040404] font-medium text-gray-200 hover:bg-neutral-900">Search</button>
                         </div>
                     </div>
                 </div>
