@@ -4,7 +4,7 @@ const Banner = () => {
         <section className="h-[70vh] w-full relative">
             <div className="relative h-[70vh] bg-blue-500 text-[rgba(0, 0, 55, 0.5)]">
                 <div className="absolute inset-0 bg-cover bg-center" style={{
-                    backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 105, 0.5), rgba(0, 0, 105, 0.5))," +
+                    backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 55, 0.5), rgba(0, 0, 15, 0.5))," +
                         "url('/banner.jpg')"
                 }}>
                     <div className="flex items-center justify-center h-full">
