@@ -126,7 +126,7 @@ const EditorsPick = () => {
                     <p className="primary-text my-3">
                         The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc,… <Link className="text-blue-500 hover:underline hover:text-blue-600">Read More</Link>
                     </p>
-                    <Link to={"/"} className="flex items-center justify-start gap-3 mb-3 group">
+                    <Link to="/blog/1" className="flex items-center justify-start gap-3 mb-3 group">
 
                         <div className="h-12 w-12 border rounded-full group-hover:border-blue-400 bg-blue-200">
                             {/* todo:replce with a image */}

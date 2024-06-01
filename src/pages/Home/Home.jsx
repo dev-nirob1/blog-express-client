@@ -1,4 +1,4 @@
-import SideMenu from "../../components/SideMenu";
+import SideMenu from "../../components/sidebar/SideMenu";
 import Banner from "./Banner";
 import MainContent from "./MainContent";
 

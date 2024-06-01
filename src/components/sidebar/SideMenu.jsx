@@ -1,6 +1,8 @@
 import Categories from "./Categories";
 import PopularPost from "./PopularPost";
+import SidebarAds from "./SidebarAds";
 import SocialMedia from "./SocialMedia";
+
 
 const SideMenu = () => {
     return (
@@ -8,6 +10,7 @@ const SideMenu = () => {
             <Categories />
             <PopularPost />
             <SocialMedia />
+            <SidebarAds/>
         </div>
     );
 };
