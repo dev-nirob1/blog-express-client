@@ -9,6 +9,13 @@ import AuthorInfo from "../pages/author/AuthorInfo";
 import Error from "../pages/ErrorPage/Error";
 import Dashboard from "../layout/Dashboard/Dashboard";
 import AdminHome from "../pages/Dashboard/Admin/AdminHome";
+import AuthorHome from "../pages/Dashboard/Author/AuthorHome";
+import ManageBlogs from "../pages/Dashboard/Admin/Blogs/ManageBlogs";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
+import AddBlogs from "../pages/Dashboard/AddBlogs/AddBlogs";
+import MyBlogs from "../pages/Dashboard/MyBlogs/MyBlogs";
+import Notification from "../pages/Dashboard/Notification/Notification";
+import Profile from "../pages/Dashboard/profile/Profile";
 
 const router = createBrowserRouter([
     {
@@ -45,12 +52,45 @@ const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard/>,
+        element: <Dashboard />,
         children: [
+            // admin routes 
             {
-                path:'admin',
-                element: <AdminHome/>
-            }
+                path: 'admin',
+                element: <AdminHome />
+            },
+            {
+                path: 'manage-blogs',
+                element: <ManageBlogs />
+            },
+            {
+                path: 'manage-users',
+                element: <ManageUsers />
+            },
+
+            //common
+            {
+                path: 'add-blog',
+                element: <AddBlogs />
+            },
+            {
+                path: 'my-blogs',
+                element: <MyBlogs />
+            },
+            {
+                path: 'notification',
+                element: <Notification />
+            },
+            {
+                path: 'profile',
+                element: <Profile />
+            },
+
+            // author routes 
+            {
+                path: 'author',
+                element: <AuthorHome />
+            },
         ]
     }
 ]);

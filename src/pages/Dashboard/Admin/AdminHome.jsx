@@ -1,7 +1,7 @@
 
 const AdminHome = () => {
     return (
-        <div className="bg-red-500 mx-5 mt-8">
+        <div className="bg-red-500">
             ami admin ami sobcheye powerfull
         </div>
     );
