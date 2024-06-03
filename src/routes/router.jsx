@@ -7,6 +7,8 @@ import Category from "../pages/blogCategory/Category";
 import BlogDetails from "../pages/blogDetails/BlogDetails";
 import AuthorInfo from "../pages/author/AuthorInfo";
 import Error from "../pages/ErrorPage/Error";
+import Dashboard from "../layout/Dashboard/Dashboard";
+import AdminHome from "../pages/Dashboard/Admin/AdminHome";
 
 const router = createBrowserRouter([
     {
@@ -39,7 +41,17 @@ const router = createBrowserRouter([
                 element: <Contact />
             },
 
-        ]
+        ],
     },
+    {
+        path: 'dashboard',
+        element: <Dashboard/>,
+        children: [
+            {
+                path:'admin',
+                element: <AdminHome/>
+            }
+        ]
+    }
 ]);
 export default router;
