@@ -1,6 +1,5 @@
 import { FaEdit, FaHome} from "react-icons/fa";
 import { MdOutlineLibraryBooks } from "react-icons/md";
-// import { MdOutlineLibraryBooks } from "react-icons/md";
 import { TbLogout2 } from "react-icons/tb";
 import { Link } from "react-router-dom";
 

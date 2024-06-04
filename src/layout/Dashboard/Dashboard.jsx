@@ -30,7 +30,7 @@ const Dashboard = () => {
 
             <div className="flex-1">
                 <Nav setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} open={open} setOpen={setOpen} />
-                <div className="m-8 shadow bg-white min-h-[calc(100vh-140px)]">
+                <div className="my-5 md:my-8 shadow bg-white min-h-[calc(100vh-140px)]">
                     <Outlet />
                 </div>
             </div>
