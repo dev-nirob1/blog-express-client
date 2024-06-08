@@ -17,6 +17,7 @@ const ManageUsers = () => {
                             <th className="p-2">Image</th>
                             <th className="p-2">Name</th>
                             <th className="p-2">Email</th>
+                            <th className="p-2">Role</th>
                             <th className="p-2">Action</th>
                         </tr>
                     </thead>

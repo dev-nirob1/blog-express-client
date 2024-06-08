@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import Google from "../../components/shared/SocialLogin/Google";
 const Login = () => {
     return (
         <div className="container mx-auto py-16">
@@ -7,20 +7,25 @@ const Login = () => {
                 <div>
                     <h1 className="p-5 bg-blue-500 text-white text-2xl font-medium text-center">Log In</h1>
                 </div>
-                <form className="p-5 space-y-6 mt-6">
-                    <label htmlFor="email"></label>
-                    <input className="block border w-full p-[10px] rounded" type="email" name="email" placeholder="email" />
+                <div className="mb-8 p-5">
+                    <form className="space-y-6">
+                        <label htmlFor="email"></label>
+                        <input className="block border w-full p-[10px] rounded" type="email" name="email" placeholder="Enter Your Email" />
 
-                    <label htmlFor="password"></label>
-                    <input className="block border w-full p-[10px] rounded" type="password" name="password" placeholder="password" />
+                        <label htmlFor="password"></label>
+                        <input className="block border w-full p-[10px] rounded" type="password" name="password" placeholder="Password" />
 
-                    <button className="block border w-full p-[10px] cursor-pointer text-white bg-blue-500 font-medium rounded" type="submit" >
-                        Log In
-                    </button>
-                </form>
-                <div className="text-center font-medium text-gray-600 space-y-4 mb-10">
-                    <p>Need an Account ? <Link to='/register'>Sign Up</Link> </p>
-                    <p><Link to='/register'>Forget Password?</Link> </p>
+                        <button className="block w-full p-[10px] cursor-pointer text-white bg-blue-500 font-medium rounded" type="submit" >
+                            Log In
+                        </button>
+                    </form>
+
+                    <Google />
+
+                    <div className="text-center font-medium text-gray-600 space-y-4">
+                        <p>Need an Account? <Link to='/register'>Sign Up</Link> </p>
+                        <p><Link to='/register'>Forget Password?</Link> </p>
+                    </div>
                 </div>
             </div>
         </div>

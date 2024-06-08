@@ -6,6 +6,7 @@ const UsersData = () => {
             <td className="p-2">Image</td>
             <td className="p-2">abul mia</td>
             <td className="p-2">goriberabaremail@gmail.com</td>
+            <td className="p-2">admin</td>
             <td className="p-2">...</td>
         </tr>
     );
