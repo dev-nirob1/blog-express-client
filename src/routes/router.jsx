@@ -16,6 +16,8 @@ import AddBlogs from "../pages/Dashboard/AddBlogs/AddBlogs";
 import MyBlogs from "../pages/Dashboard/MyBlogs/MyBlogs";
 import Notification from "../pages/Dashboard/Notification/Notification";
 import Profile from "../pages/Dashboard/profile/Profile";
+import Register from "../pages/Register/Register";
+import Login from "../pages/login/Login";
 
 const router = createBrowserRouter([
     {
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
             {
                 path: "/author/:email",
                 element: <AuthorInfo />
+            },
+            {
+                path: "/login",
+                element: <Login />
+            },
+            {
+                path: "/register",
+                element: <Register />
             },
             {
                 path: "/contact-us",
