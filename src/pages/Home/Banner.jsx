@@ -1,9 +1,6 @@
-import { useContext } from "react";
-import { AuthContext } from "../../provider/AuthProvider";
 
 const Banner = () => {
-    const {user} = useContext(AuthContext)
-    console.log(user)
+
     return (
         <section className="h-[70vh] w-full relative">
             <div className="relative h-[70vh] bg-blue-500 text-[rgba(0, 0, 55, 0.5)]">
