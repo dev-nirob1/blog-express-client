@@ -2,8 +2,11 @@ import { FaEdit, FaHome, FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { TbLogout2 } from "react-icons/tb";
 import { MdOutlineLibraryBooks } from "react-icons/md";
+import { useContext } from "react";
+import { AuthContext } from "../../../provider/AuthProvider";
 
 const Admin = () => {
+    const {logOut} = useContext(AuthContext)
     return (
         <div className="py-8 px-5">
             <ul className="space-y-2 text-lg md:text-xl font-semibold">
@@ -36,7 +39,7 @@ const Admin = () => {
                 </li>
             </ul>
             <div className="text-lg md:text-xl font-semibold mt-10">
-                <button className="py-2 hover:bg-gray-50 w-full flex items-center gap-3">
+                <button onClick={()=>{logOut()}} className="py-2 hover:bg-gray-50 w-full flex items-center gap-3">
                     <TbLogout2 size={25} /> Logout
                 </button>
             </div>

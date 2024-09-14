@@ -1,10 +1,10 @@
 
 const Profile = () => {
-    return (
-        <div>
-            this is your profile information
-        </div>
-    );
+  return (
+    <div>
+      
+    </div>
+  );
 };
 
 export default Profile;

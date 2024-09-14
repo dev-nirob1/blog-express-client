@@ -18,6 +18,8 @@ import Notification from "../pages/Dashboard/Notification/Notification";
 import Profile from "../pages/Dashboard/profile/Profile";
 import Register from "../pages/Register/Register";
 import Login from "../pages/login/Login";
+import PrivateRoutes from "./PrivateRoutes";
+import Blogs from "../pages/blogs/Blogs";
 
 const router = createBrowserRouter([
     {
@@ -34,8 +36,12 @@ const router = createBrowserRouter([
                 element: <About />
             },
             {
+                path: "/blogs",
+                element: <Blogs></Blogs>
+            },
+            {
                 path: "/blog/:id",
-                element: <BlogDetails />
+                element: <PrivateRoutes><BlogDetails /></PrivateRoutes>
             },
             {
                 path: "/blog/:category",
@@ -62,7 +68,7 @@ const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: <PrivateRoutes><Dashboard /></PrivateRoutes>,
         children: [
             // admin routes 
             {
