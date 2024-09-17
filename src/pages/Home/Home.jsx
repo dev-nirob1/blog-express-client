@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import MainContent from "./MainContent";
 
 const Home = () => {
+
     return (
         <div>
             <Banner />

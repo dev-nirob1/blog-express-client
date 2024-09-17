@@ -1,7 +1,12 @@
 import UsersData from "../../../../components/dashboard/UsersData/UsersData";
 import OutletSearchbar from "../../../../components/dashboard/common/OutletSearchbar";
+import { useContext } from "react";
+import { DataContext } from "../../../../provider/AppContext";
 
 const ManageUsers = () => {
+
+    const { users } = useContext(DataContext)
+
     return (
         <div className="py-5 w-[95%] mx-auto">
             <OutletSearchbar
@@ -22,7 +27,9 @@ const ManageUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <UsersData />
+                        {
+                            users.map((userData, index) => <UsersData key={userData._id} userData={userData} index={index} />)
+                        }
                     </tbody>
                 </table>
             </div>

@@ -1,21 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Google from "../../components/shared/SocialLogin/Google";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
+import { DataContext } from "../../provider/AppContext";
 
 const Register = () => {
-    const {createUser} = useContext(AuthContext)
- const {handleSubmit, register} = useForm()
+    const { createUser } = useContext(AuthContext)
+    const { storeUsers } = useContext(DataContext)
+    const { handleSubmit, register } = useForm()
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location?.state?.from?.pathname || '/';
 
- const onSubmit = data => {
-    createUser(data.email, data.password)
-    .then(result => console.log(result))
-    .catch(err => {
-        const errorMessage = err.code.split('/')[1].split('-').join(' ')
-        alert(errorMessage)
-    })
- }
+
+    const onSubmit = data => {
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                const userData = {
+                    name: user?.displayName || data.name,
+                    email: user?.email,
+                    profileImage: user?.photoURL || '',
+                    userSince: new Date(),
+                    role: 'user'
+                }
+                storeUsers(userData)
+                if (user && user?.email)
+                    alert('Registration Successfull')
+                navigate(from, { replace: true })
+            })
+            .catch(err => {
+                const errorMessage = err.code.split('/')[1].split('-').join(' ')
+                alert(errorMessage)
+            })
+    }
 
     return (
         <div className="container mx-auto py-16">

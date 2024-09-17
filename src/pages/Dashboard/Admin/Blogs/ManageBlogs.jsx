@@ -1,4 +1,4 @@
-import UsersData from "../../../../components/dashboard/UsersData/UsersData";
+import BlogsData from "../../../../components/dashboard/blogsData/BlogsData";
 import OutletSearchbar from "../../../../components/dashboard/common/OutletSearchbar";
 
 const ManageBlogs = () => {
@@ -21,7 +21,7 @@ const ManageBlogs = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <UsersData />
+                        <BlogsData />
                     </tbody>
                 </table>
             </div>

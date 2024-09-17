@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-// import Admin from "./Admin";
-import Author from "./Author";
+import Admin from "./Admin";
+// import Author from "./Author";
 import { FaXmark } from "react-icons/fa6";
 
 
@@ -25,8 +25,8 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
 
             {/* navlinks  */}
             <div>
-                {/* <Admin /> */}
-                <Author />
+                <Admin />
+                {/* <Author /> */}
             </div>
         </div>
     );

@@ -12,12 +12,15 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import AuthProvider from './provider/AuthProvider';
+import AppContext from './provider/AppContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RouterProvider router={router} />
+        <AppContext>
+          <RouterProvider router={router} />
+        </AppContext>
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>,
