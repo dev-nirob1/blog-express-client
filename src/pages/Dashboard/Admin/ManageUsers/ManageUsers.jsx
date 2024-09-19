@@ -11,7 +11,7 @@ const ManageUsers = () => {
         <div className="py-5 w-[95%] mx-auto">
             <OutletSearchbar
                 routeName='Total Users'
-                length="20"
+                length={users.length}
             />
 
             <div className="overflow-x-auto">

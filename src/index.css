@@ -8,3 +8,6 @@
 .primary-bg{
     @apply bg-[#040404]
 }
+.jodit-status-bar-link{
+    display: none;
+}

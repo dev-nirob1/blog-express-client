@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import Admin from "./Admin";
-// import Author from "./Author";
+import Author from "./Author";
 import { FaXmark } from "react-icons/fa6";
+import { useContext } from "react";
+import { DataContext } from "../../../provider/AppContext";
 
 
 const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
+    const { role } = useContext(DataContext)
+
     return (
-        <div className="bg-white min-h-screen overflow-y-auto pt-16">
+        <div className="bg-white h-[100vh] sticky top-0 overflow-y-auto pt-16">
             <div className="absolute top-3 right-1 md:hidden z-[999]">
                 <button className="p-1 border" onClick={() => setSidebarOpen(!sidebarOpen)}>
                     {
@@ -25,8 +29,8 @@ const Sidebar = ({ setSidebarOpen, sidebarOpen }) => {
 
             {/* navlinks  */}
             <div>
-                <Admin />
-                {/* <Author /> */}
+                {role === 'admin' && < Admin />}
+                {role === 'author' && <Author />}
             </div>
         </div>
     );

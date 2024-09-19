@@ -22,7 +22,7 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div ref={collapseRef} className="flex 2xl:container 2xl:mx-auto bg-gray-50">
+        <div ref={collapseRef} className="flex min-h-[100vh] 2xl:container 2xl:mx-auto bg-gray-50">
 
             <div className={`fixed inset-0 md:relative md:block z-40 md:z-auto transition-transform transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 w-64`}>
                 <Sidebar setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />

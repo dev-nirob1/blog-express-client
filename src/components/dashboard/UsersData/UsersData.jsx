@@ -16,7 +16,7 @@ const UsersData = ({ userData, index }) => {
         deleteUser(email)
     }
     return (
-        <tr className="w-full text-neutral-600 font-medium">
+        <tr className="w-full text-neutral-600 font-medium border-b hover:bg-slate-50">
             <td className="p-2">{index + 1}</td>
             <td className="p-2">
                 <img className="rounded-full w-8 h-8 border" src={profileImage} alt="" />
@@ -26,7 +26,7 @@ const UsersData = ({ userData, index }) => {
             <td className="p-2">
                 <label htmlFor="role"></label>
 
-                <select onChange={handleUserRoleChange} defaultValue={role} name="role" id="role">
+                <select className="border rounded p-1 cursor-pointer" onChange={handleUserRoleChange} defaultValue={role} name="role" id="role">
                     <option value="user">User</option>
                     <option value="author">Author</option>
                     <option value="admin">Admin</option>

@@ -64,13 +64,31 @@ const AppContext = ({ children }) => {
         }
     })
 
+    //upload image
+    const uploadImageMutation = useMutation({
+        mutationFn: async (file) => {
+            const formData = new FormData()
+            formData.append('image', file)
+
+            const res = await axios.post(`${import.meta.env.VITE_IMAGE_UPLOAD_URL}/1/upload?key=${import.meta.env.VITE_IMAGE_UPLOAD_API_KEY}`, formData, {
+                headers:{
+                    "Content-Type": 'multipart/form-data'
+                }
+            })
+            console.log('upload res from context', res, res.data)
+            return res.data
+        }
+
+    })
+
 
     const data = {
         role,
         users,
         storeUsers: userInfoMutation.mutate,
         updateUserRole: mutation.mutate,
-        deleteUser: deleteUserMutation.mutate
+        deleteUser: deleteUserMutation.mutate,
+        imageUpload: uploadImageMutation.mutateAsync,
     }
     return (
         <DataContext.Provider value={data}>
