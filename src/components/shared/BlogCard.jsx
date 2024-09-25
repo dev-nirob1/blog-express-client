@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const BlogCard = ({ blog }) => {
     const { _id, category, titleImage, title, content, author } = blog
-
+    const sanitizeContent = content.replace(/<[^>]+>/g, '')
 
     return (
         <div className="flex flex-col border p-4 rounded-lg">
@@ -26,7 +26,9 @@ const BlogCard = ({ blog }) => {
                     {title}
                 </h3>
                 <p className="primary-text my-3">
-                    {content} <Link to={`blog/${_id}`} className="text-blue-500 hover:underline hover:text-blue-600">Read More</Link>
+                    {sanitizeContent.length > 170 ? sanitizeContent.substr(0, 170) + '...' : sanitizeContent}
+
+                   {sanitizeContent?.length > 170 && <Link to={`blog/${_id}`} className="text-blue-500 hover:underline hover:text-blue-600">Read More</Link>}
                 </p>
             </div>
         </div>

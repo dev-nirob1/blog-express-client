@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { DataContext } from "../../provider/AppContext";
-import BlogCard from "./BlogCard";
+import BlogCard from "../shared/BlogCard";
 
 const RecentBlogs = () => {
     const { blogs } = useContext(DataContext)

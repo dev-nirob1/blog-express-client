@@ -17,13 +17,13 @@ const Admin = () => {
                 </li>
                 <li className="border-b">
                     <Link to="/dashboard/manage-users" className="py-2 hover:bg-gray-50 flex items-center gap-3">
-                        <FaUsers /> Users
+                        <FaUsers />Manage Users
                     </Link>
                 </li>
                 <li className="border-b">
                     <Link to="/dashboard/manage-blogs" className="py-2 hover:bg-gray-50 flex items-center gap-3">
                         <MdOutlineLibraryBooks size={25} />
-                        Blogs
+                       Manage Blogs
                     </Link>
                 </li>
                 <li className="border-b">

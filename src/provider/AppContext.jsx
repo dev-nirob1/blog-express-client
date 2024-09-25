@@ -66,60 +66,64 @@ const AppContext = ({ children }) => {
 
     // ********************* blogs [crud] related *****************
 
-    const {data: blogs=[]} = useQuery({
+    // fetch all blogs 
+    const { data: blogs = [] } = useQuery({
         queryKey: ['blogs'],
-        queryFn: async() => {
+        queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs`)
             return res.data
         }
     })
 
-    const postBlogMutation = useMutation({
-        mutationKey: ['blogs'],
-        mutationFn: async(blogData)=>{
-            const res = await axios.post(`${import.meta.env.VITE_APIURL}/blogs`, blogData)
-            console.log(res.data)
-            return res.data
-        }
-    })
+    //get singleblogs by id
 
 
-
-
-
-    //upload image
-    const uploadImageMutation = useMutation({
-        mutationFn: async (file) => {
-            const formData = new FormData()
-            formData.append('image', file)
-
-            const res = await axios.post(`${import.meta.env.VITE_IMAGE_UPLOAD_URL}/1/upload?key=${import.meta.env.VITE_IMAGE_UPLOAD_API_KEY}`, formData, {
-                headers:{
-                    "Content-Type": 'multipart/form-data'
-                }
-            })
-            // console.log('upload res from context', res, res.data)
-            return res.data
-        }
-
-    })
-
-
-    const data = {
-        role,
-        users,
-        blogs,
-        storeUsers: userInfoMutation.mutate,
-        updateUserRole: mutation.mutate,
-        deleteUser: deleteUserMutation.mutate,
-        imageUpload: uploadImageMutation.mutateAsync,
-        postBlog: postBlogMutation.mutate,
+const postBlogMutation = useMutation({
+    mutationKey: ['blogs'],
+    mutationFn: async (blogData) => {
+        const res = await axios.post(`${import.meta.env.VITE_APIURL}/blogs`, blogData)
+        console.log(res.data)
+        return res.data
     }
-    return (
-        <DataContext.Provider value={data}>
-            {children}
-        </DataContext.Provider>
-    );
+})
+
+
+
+
+
+//upload image
+const uploadImageMutation = useMutation({
+    mutationFn: async (file) => {
+        const formData = new FormData()
+        formData.append('image', file)
+
+        const res = await axios.post(`${import.meta.env.VITE_IMAGE_UPLOAD_URL}/1/upload?key=${import.meta.env.VITE_IMAGE_UPLOAD_API_KEY}`, formData, {
+            headers: {
+                "Content-Type": 'multipart/form-data'
+            }
+        })
+        // console.log('upload res from context', res, res.data)
+        return res.data
+    }
+
+})
+
+
+const data = {
+    role,
+    users,
+    blogs,
+    storeUsers: userInfoMutation.mutate,
+    updateUserRole: mutation.mutate,
+    deleteUser: deleteUserMutation.mutate,
+    imageUpload: uploadImageMutation.mutateAsync,
+    postBlog: postBlogMutation.mutate,
+}
+return (
+    <DataContext.Provider value={data}>
+        {children}
+    </DataContext.Provider>
+);
 };
 
 export default AppContext;

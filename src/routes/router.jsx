@@ -20,6 +20,8 @@ import Register from "../pages/Register/Register";
 import Login from "../pages/login/Login";
 import PrivateRoutes from "./PrivateRoutes";
 import Blogs from "../pages/blogs/Blogs";
+import AdminRoutes from "./AdminRoutes";
+import AuthorRoutes from "./AuthorRoutes";
 
 const router = createBrowserRouter([
     {
@@ -41,11 +43,12 @@ const router = createBrowserRouter([
             },
             {
                 path: "/blog/:id",
-                element: <PrivateRoutes><BlogDetails /></PrivateRoutes>
+                element: <PrivateRoutes><BlogDetails /></PrivateRoutes>,
+                loader: ({params})=> fetch(`${import.meta.env.VITE_APIURL}/blog/${params.id}`)
             },
             {
-                path: "/blog/:category",
-                element: <Category />
+                path: "/blogs/:category",
+                element: <PrivateRoutes><Category /></PrivateRoutes>
             },
             {
                 path: "/author/:email",
@@ -73,15 +76,15 @@ const router = createBrowserRouter([
             // admin routes 
             {
                 path: 'admin',
-                element: <AdminHome />
+                element: <AdminRoutes><AdminHome /></AdminRoutes>
             },
             {
                 path: 'manage-blogs',
-                element: <ManageBlogs />
+                element: <AdminRoutes><ManageBlogs /></AdminRoutes>
             },
             {
                 path: 'manage-users',
-                element: <ManageUsers />
+                element: <AdminRoutes><ManageUsers /></AdminRoutes>
             },
 
             //common
@@ -91,7 +94,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'my-blogs',
-                element: <MyBlogs />
+                element: <AdminRoutes><MyBlogs /></AdminRoutes>
             },
             {
                 path: 'notification',
@@ -105,7 +108,7 @@ const router = createBrowserRouter([
             // author routes 
             {
                 path: 'author',
-                element: <AuthorHome />
+                element: <AuthorRoutes><AuthorHome /></AuthorRoutes>
             },
         ]
     }
