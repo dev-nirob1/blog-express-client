@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { FaBars, FaBell } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../provider/AuthProvider";
 
 const Nav = ({ setSidebarOpen, sidebarOpen, open, setOpen }) => {
-
+    const {logOut, user} = useContext(AuthContext)
     return (
         <div className="px-4 md:px-10 shadow border-b flex items-center justify-between h-16 bg-white">
             <div className="block md:hidden">
@@ -26,7 +28,7 @@ const Nav = ({ setSidebarOpen, sidebarOpen, open, setOpen }) => {
                     </div> */}
                 </div>
                 <div className="cursor-pointer" onClick={() => setOpen(!open)}>
-                    <img alt="Tailwind CSS Navbar component" className="w-10 h-10 rounded-full" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <img alt={'user'} className="w-10 h-10 rounded-full" src={user?.photoUrl} title={user?.displayName} />
                 </div>
                 <ul tabIndex={0} className={`mt-3 z-[1] shadow bg-white rounded-box w-52 ${open ? 'absolute top-8 right-0' : 'hidden'} py-2 rounded-b-lg`}>
 
@@ -36,7 +38,7 @@ const Nav = ({ setSidebarOpen, sidebarOpen, open, setOpen }) => {
                         </Link>
                     </li>
                     <li>
-                        <button className="block hover:bg-gray-50 w-full text-left p-2">Logout</button>
+                        <button onClick={()=> logOut()} className="block hover:bg-gray-50 w-full text-left p-2">Logout</button>
                     </li>
                 </ul>
             </div>

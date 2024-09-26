@@ -1,29 +1,35 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { DataContext } from "../provider/AppContext";
 import { useNavigate } from "react-router-dom";
 
 const AdminRoutes = ({ children }) => {
-    const { user, loading } = useContext(AuthContext)
-    const { role } = useContext(DataContext)
+    const { user, loading } = useContext(AuthContext);
+    const { role } = useContext(DataContext);
+    const [isRoleLoading, setIsRoleLoading] = useState(true);
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loading && (!user || !user.email || role !== 'admin')) {
-            alert("You are not authorized to access this page.");
-            navigate("/");
+        if (!loading && !isRoleLoading) {
+            if (!user || !user.email || role !== 'admin') {
+                alert("You are not authorized to access this page.");
+                navigate("/"); 
+            }
         }
-    }, [loading, user, role, navigate])
+    }, [loading, isRoleLoading, user, role, navigate]);
+
+    useEffect(() => {
+        if (role) {
+            setIsRoleLoading(false); 
+        }
+    }, [role]);
 
 
-    if (loading) {
-        return <div className="text-5xl">loading...</div>
+    if (loading || isRoleLoading) {
+        return <div className="text-5xl">loading...</div>;
     }
 
-    if (user && user?.email && role === 'admin') {
-        return children
-    }
-    return null
+    return children;
 };
 
 export default AdminRoutes;
