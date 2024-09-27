@@ -33,10 +33,11 @@ const AddBlogs = () => {
                     content,
                     titleImage: uploadedImage?.data?.url,
                     author: {
-                        name: user?.displayName || '',
+                        name: user?.displayName || 'unknown',
                         email: user?.email,
-                        profileImage: user?.photoUrl
+                        profileImage: user?.photoUrl || 'https://i.ibb.co.com/zFMrg3c/avatar.png'
                     },
+                    views: 0,
                     postAt: new Date(),
                     likesCount: 0,
                     commentsCount: 0,

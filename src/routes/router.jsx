@@ -94,7 +94,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'my-blogs',
-                element: <AdminRoutes><MyBlogs /></AdminRoutes>
+                element: <AuthorRoutes><MyBlogs /></AuthorRoutes>
             },
             {
                 path: 'notification',
