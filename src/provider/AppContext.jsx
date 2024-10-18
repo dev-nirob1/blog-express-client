@@ -78,17 +78,37 @@ const AppContext = ({ children }) => {
             return res.data
         }
     })
-    
+
+    //get recent blogs
+
+    const {data: recentBlogs = []} = useQuery({
+        queryKey: ['recentBlogs'],
+        queryFn: async()=> {
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/recentBlogs`)
+            return res.data
+        }
+    })
+
+    //get editors picked blogs
+    const {data: editorsPick = []} = useQuery({
+        queryKey: ['editorsPick'],
+        queryFn: async()=> {
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/recentBlogs`)
+            return res.data
+        }
+    })
+
+
 
     //fetch blogs for search and pagination
     const { data: paginationSearchBlogs = [] } = useQuery({
         queryKey: ['blogs', page, blogPerPage, search],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs`,{
-                params:{
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs`, {
+                params: {
                     page,
-                     limit: blogPerPage,
-                      search
+                    limit: blogPerPage,
+                    search
                 }
             })
             return res.data
@@ -139,6 +159,8 @@ const AppContext = ({ children }) => {
         loading,
         users,
         blogs,
+        recentBlogs,
+        editorsPick,
         paginationSearchBlogs,
         storeUsers: userInfoMutation.mutate,
         updateUserRole: mutation.mutate,
