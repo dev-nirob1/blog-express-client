@@ -21,7 +21,7 @@ const ManageBlogs = () => {
                             <th className="p-2">Title</th>
                             <th className="p-2">Author</th>
                             <th className="p-2">Status</th>
-                            <th className="p-2">Action</th>
+                            <th className="p-2 text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>

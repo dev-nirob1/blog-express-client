@@ -28,7 +28,7 @@ const BlogCard = ({ blog }) => {
                 <p className="text-gray-600 mt-2">
                     {sanitizeContent.length > 150 ? sanitizeContent.substr(0, 150) + '... ' : sanitizeContent}
 
-                    {sanitizeContent?.length > 150 && <Link to={`blog/${_id}`} className="text-blue-500 hover:underline hover:text-blue-600">Read More</Link>}
+                    {sanitizeContent?.length > 150 && <Link to={`/blog/${_id}`} className="text-blue-500 hover:underline hover:text-blue-600">Read More</Link>}
                 </p>
             </div>
         </div>

@@ -96,8 +96,8 @@ const Blogs = () => {
 
                 </div>
                 <div className='col-span-1 px-4'>
-                    <Categories/>
-                    <PopularPost/>
+                    <Categories />
+                    <PopularPost />
                 </div>
             </div>
         </div>

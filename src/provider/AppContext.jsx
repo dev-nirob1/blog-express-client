@@ -93,7 +93,7 @@ const AppContext = ({ children }) => {
     const {data: editorsPick = []} = useQuery({
         queryKey: ['editorsPick'],
         queryFn: async()=> {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/recentBlogs`)
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/editorsPick`)
             return res.data
         }
     })
