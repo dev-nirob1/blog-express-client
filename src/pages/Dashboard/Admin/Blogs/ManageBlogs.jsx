@@ -10,7 +10,7 @@ const ManageBlogs = () => {
         <div className="py-5 w-[95%] mx-auto">
             <OutletSearchbar
                 routeName='Total blogs'
-                length={blogs?.blogs.length}
+                length={blogs?.length}
             />
 
             <div className="overflow-x-auto">
@@ -25,7 +25,7 @@ const ManageBlogs = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {blogs?.blogs.map((item, index) => <BlogsData key={item._id} blogs={item} index={index} />)}
+                        {blogs?.map((item, index) => <BlogsData key={item._id} blogs={item} index={index} />)}
                     </tbody>
                 </table>
             </div>

@@ -7,7 +7,7 @@ const MainContent = () => {
         <div className="p-5 rounded-lg">
             <RecentBlogs />
             <AdsBanner />
-            {/* <EditorsPick /> */}
+            <EditorsPick />
         </div>
     );
 };

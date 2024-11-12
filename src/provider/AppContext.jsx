@@ -74,11 +74,12 @@ const AppContext = ({ children }) => {
     const { data: blogs = [], refetch: refetchBlogs } = useQuery({
         queryKey: ['blogs'],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs`)
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/dashboard/blogs`)
             return res.data
         }
     })
 
+ 
     //get recent blogs
     const { data: recentBlogs = [] } = useQuery({
         queryKey: ['recentBlogs'],
@@ -88,14 +89,14 @@ const AppContext = ({ children }) => {
         }
     })
 
-    //get editors picked blogs
-    // const { data: editorsPick = [] } = useQuery({
-    //     queryKey: ['blogs', 'editorsPick'],
-    //     queryFn: async () => {
-    //         const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs/editorsPick`)
-    //         return res.data
-    //     }
-    // })
+    // get editors picked blogs
+    const { data: editorsPick = [] } = useQuery({
+        queryKey: ['blogs', 'editorsPick'],
+        queryFn: async () => {
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs/editorsPick`)
+            return res.data
+        }
+    })
 
     //fetch blogs for search and pagination
     const { data: paginationSearchBlogs = [] } = useQuery({
@@ -187,6 +188,7 @@ const AppContext = ({ children }) => {
         users,
         blogs,
         recentBlogs,
+        editorsPick,
         updateEditorsPickStatus: editorPickMutation.mutateAsync,
         paginationSearchBlogs,
         storeUsers: userInfoMutation.mutate,
