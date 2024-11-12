@@ -43,7 +43,8 @@ const AddBlogs = () => {
                     commentsCount: 0,
                     approved: false,
                     denied: false,
-                    editorsPick: false
+                    editorsPick: false,
+                    status: 'pending'
                 }
 
                 postBlog(blogData, {

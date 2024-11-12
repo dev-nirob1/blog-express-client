@@ -14,7 +14,7 @@ const AppContext = ({ children }) => {
     const blogPerPage = 3
 
     //get all users
-    const { data: users = [] } = useQuery({
+    const { data: users = [], refetch: refetchUsers } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/users`);
@@ -71,7 +71,7 @@ const AppContext = ({ children }) => {
     // ********************* blogs [crud] related *****************
 
     // fetch all blogs 
-    const { data: blogs = [] } = useQuery({
+    const { data: blogs = [], refetch: refetchBlogs } = useQuery({
         queryKey: ['blogs'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs`)
@@ -80,25 +80,22 @@ const AppContext = ({ children }) => {
     })
 
     //get recent blogs
-
-    const {data: recentBlogs = []} = useQuery({
+    const { data: recentBlogs = [] } = useQuery({
         queryKey: ['recentBlogs'],
-        queryFn: async()=> {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/recentBlogs`)
+        queryFn: async () => {
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs/recentBlogs`)
             return res.data
         }
     })
 
     //get editors picked blogs
-    const {data: editorsPick = []} = useQuery({
-        queryKey: ['editorsPick'],
-        queryFn: async()=> {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/editorsPick`)
-            return res.data
-        }
-    })
-
-
+    // const { data: editorsPick = [] } = useQuery({
+    //     queryKey: ['blogs', 'editorsPick'],
+    //     queryFn: async () => {
+    //         const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs/editorsPick`)
+    //         return res.data
+    //     }
+    // })
 
     //fetch blogs for search and pagination
     const { data: paginationSearchBlogs = [] } = useQuery({
@@ -115,10 +112,39 @@ const AppContext = ({ children }) => {
         }
     })
 
+    // approve a blog (admin)
+    const approveBlogMutation = useMutation({
+        mutationKey: ['blog', 'approve'],
+        mutationFn: async ({ id }) => {
+            console.log(id)
+            const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blog/approve/${id}`)
+            console.log(res)
+            return res?.data
+        }
+    })
+    // deny a blog (admin)
+    const denyBlogMutation = useMutation({
+        mutationKey: ['blog', 'deny'],
+        mutationFn: async ({ id }) => {
+            console.log(id)
+            const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blog/deny/${id}`)
+            console.log(res)
+            return res?.data
+        }
+    })
 
+    //editors pick(admin)
+    const editorPickMutation = useMutation({
+        mutationKey: ['blogs', 'editorsPick'],
+        mutationFn: async (status) => {
+            // console.log(status.id, {status}, status.editorsPick)
+            const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blogs/editorsPick/${status.id}`, {editorsPick: status.editorsPick})
+            // console.log(res.data)
+            return res.data
+        }
+    })
 
-
-
+    //post a blog
     const postBlogMutation = useMutation({
         mutationKey: ['blogs'],
         mutationFn: async (blogData) => {
@@ -127,7 +153,6 @@ const AppContext = ({ children }) => {
             return res.data
         }
     })
-
 
 
 
@@ -151,6 +176,8 @@ const AppContext = ({ children }) => {
 
 
     const data = {
+        refetchUsers,
+        refetchBlogs,
         page,
         setPage,
         setSearch,
@@ -160,13 +187,15 @@ const AppContext = ({ children }) => {
         users,
         blogs,
         recentBlogs,
-        editorsPick,
+        updateEditorsPickStatus: editorPickMutation.mutateAsync,
         paginationSearchBlogs,
         storeUsers: userInfoMutation.mutate,
         updateUserRole: mutation.mutate,
         deleteUser: deleteUserMutation.mutate,
         imageUpload: uploadImageMutation.mutateAsync,
         postBlog: postBlogMutation.mutate,
+        updateApproveStatus: approveBlogMutation.mutateAsync,
+        updateDenyStatus: denyBlogMutation.mutateAsync
     }
     return (
         <DataContext.Provider value={data}>

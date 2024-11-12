@@ -1,9 +1,77 @@
+import { useContext } from "react";
 import { FaEye } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { DataContext } from "../../../provider/AppContext";
 
 const BlogsData = ({ blogs, index }) => {
-    const { _id, title, author, denied, approved } = blogs
-    console.log(blogs)
+    const { _id, title, author, status, editorsPick } = blogs
+    // console.log(blogs)
+    const { updateApproveStatus, updateDenyStatus, updateEditorsPickStatus, refetchBlogs } = useContext(DataContext)
+
+    const handleUpdateApprove = (blogId) => {
+
+        updateApproveStatus({ id: blogId })
+            .then(res => {
+                console.log(res)
+                if (res?.modifiedCount === 1) {
+                    alert('The blog has been successfully approved and is now live.')
+                    refetchBlogs()
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                alert('An error occurred while approving the blog. Please try again.');
+            });
+    }
+
+    const handleUpdateDeny = (blogId) => {
+        updateDenyStatus({ id: blogId })
+            .then(res => {
+                // console.log(res)
+                if (res?.modifiedCount === 1) {
+                    alert('The blog has been successfully marked as denied.');
+                    refetchBlogs()
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                alert('An error occurred while denying the blog. Please try again.');
+            })
+    }
+
+    const handleAddEditorsPick = (id) => {
+        const status = {
+            editorsPick: true,
+            id: id
+        }
+        updateEditorsPickStatus(status)
+            .then(res => {
+                if (res?.modifiedCount === 1) {
+                    alert("Success! This blog has been featured as an Editor's Pick.")
+                    refetchBlogs()
+                }
+            })
+            .catch(err => {
+                console.log(err)
+                alert('Something Went Wrong')
+            })
+    }
+
+    const handleRemoveEditorsPick = (id) => {
+        const status = {
+            editorsPick: false,
+            id: id
+        }
+        updateEditorsPickStatus(status)
+            .then(res => {
+                if (res?.modifiedCount === 1) {
+                    alert("The blog has been removed from the Editor's Picks list.")
+                    refetchBlogs()
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <tr className="w-full text-neutral-600 font-medium border-b">
             <td className="p-2">{index + 1}</td>
@@ -15,44 +83,60 @@ const BlogsData = ({ blogs, index }) => {
                 </div>
             </td>
             <td className="p-2">
-                {approved && <span className="border border-green-500 px-5 py-2 rounded bg-green-600 text-white cursor-pointer">Approved</span> }
-                {denied && <span className="border border-red-500 px-5 py-2 rounded bg-red-500 text-white cursor-pointer">Denied</span>}
-                {!approved && !denied && <span className="border border-orange-400 px-5 py-2 rounded bg-orange-400 cursor-pointer">Pending</span>}
+
+                <select
+                    className="border rounded p-1 cursor-pointer "
+                    defaultValue={status}
+                    onChange={e => {
+                        if (e.target.value === 'approve') {
+                            handleUpdateApprove(_id)
+                        }
+                        else if (e.target.value === 'deny') {
+                            handleUpdateDeny(_id)
+                        }
+                    }}
+                >
+                    <option value={status}>
+                        {status}
+                    </option>
+
+                    <option className=" bg-green-500 text-white hover:bg-green-600" value="approve">Approve</option>
+
+                    <option className="bg-red-500 text-white cursor-pointer" value="deny">Deny</option>
+
+                    {/* <option className="cursor-pointer" value="admin">Delete</option> */}
+                </select>
             </td>
             <td className="p-2 flex gap-4 items-center justify-center">
                 <div className="border rounded p-1 cursor-pointer">
                     <Link to={`/blog/${_id}`}><FaEye size={25} /></Link>
                 </div>
-                <select className="border rounded p-1 cursor-pointer" name="role" id="role">
-                    {!approved && <option className="cursor-pointer" value="user">Approve</option>}
-                    {!denied && <option className="cursor-pointer" value="author">Deny</option>}
-                    {/* <option className="cursor-pointer" value="admin">Delete</option> */}
-                </select>
+
                 <div className="flex flex-col">
                     <label>
                         <input
-                        className="mr-1"
+                            className="mr-1"
                             type="radio"
-                            name={`editorPick-${blogs._id}`}
+                            checked={editorsPick === true}
                             value="yes"
-                        // onChange={handleRadioChange} 
+                            onChange={() => handleAddEditorsPick(_id)}
                         />
                         Picked as Editor
                     </label>
                     <label>
                         <input
-                        className="mr-1"
+                            className="mr-1"
                             type="radio"
-                            name={`editorPick-${blogs._id}`}
-                            value="no"
-                        // onChange={handleRadioChange} 
+                            value='No'
+                            checked={editorsPick === false}
+                            onChange={() => handleRemoveEditorsPick(_id)}
                         />
                         Not Picked
                     </label>
                 </div>
 
             </td>
-        </tr>
+        </tr >
     );
 };
 
