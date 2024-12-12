@@ -2,11 +2,13 @@ import { Helmet } from "react-helmet-async";
 import SideMenu from "../../components/sidebar/SideMenu";
 import Banner from "./Banner";
 import MainContent from "./MainContent";
+import ScrollToTop from "../../components/ScrollToTop";
 
 const Home = () => {
 
     return (
         <div>
+            <ScrollToTop/>
             <Helmet>
                 <title>Blog Express</title>
             </Helmet>

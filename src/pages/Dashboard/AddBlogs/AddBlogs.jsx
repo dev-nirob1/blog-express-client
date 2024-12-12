@@ -9,6 +9,8 @@ import 'react-quill/dist/quill.snow.css';
 import { toolbarOptions } from "../../../utilities/modules";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
+import ScrollToTop from "../../../components/ScrollToTop";
 
 const AddBlogs = () => {
     const { imageUpload, postBlog, role } = useContext(DataContext)
@@ -71,6 +73,10 @@ const AddBlogs = () => {
 
     return (
         <div className="py-5 h-full w-[95%] mx-auto">
+            <ScrollToTop/>
+            <Helmet>
+                <title>Add Blog | Blog Express</title>
+            </Helmet>
             <div>
                 <h1 className="my-5 text-center text-3xl font-medium">Add Blog</h1>
             </div>

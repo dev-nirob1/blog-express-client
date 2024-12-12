@@ -1,26 +1,36 @@
-import { useContext} from "react";
+import { useContext } from "react";
 import BlogsData from "../../../../components/dashboard/blogsData/BlogsData";
 import OutletSearchbar from "../../../../components/dashboard/common/OutletSearchbar";
 import { DataContext } from "../../../../provider/AppContext";
+import Loader from "../../../../components/Loader/Loader";
+import { AuthContext } from "../../../../provider/AuthProvider";
+import { Helmet } from "react-helmet-async";
+import ScrollToTop from "../../../../components/ScrollToTop";
 
 const ManageBlogs = () => {
-    const { blogPage, setBlogPage, blogsPerPage, paginationBlogsDashboard } = useContext(DataContext)
-   
+    const { blogPage, setBlogPage, blogsPerPage, paginationBlogsDashboard } = useContext(DataContext);
+    const {loading} = useContext(AuthContext)
+    
     const { result = [], totalBlogs } = paginationBlogsDashboard;
-    const totalPages = Math.ceil(totalBlogs / blogsPerPage)
+    const totalPages = Math.ceil(totalBlogs / blogsPerPage);
 
     const handlePageChange = (newPage) => {
         setBlogPage(newPage)
     }
 
     const pages = totalPages > 0 ? [...Array(totalPages).keys()] : [];
+    console.log('data',result, 'totalpages',totalPages, 'blogspage',blogPage,'blogsperpage', blogsPerPage);
+    if(loading){
+        return <Loader/>
+    }
 
     return (
         <div className="py-5 w-[95%] mx-auto">
-            <OutletSearchbar
-                routeName='Total blogs'
-                length={totalBlogs}
-            />
+            <ScrollToTop/>
+            <Helmet>
+                <title>Manage Blogs | Blog Express</title>
+            </Helmet>
+            <OutletSearchbar routeName="Total blogs" length={totalBlogs} />
 
             <div className="overflow-x-auto">
                 <table className="text-sm w-full text-left overflow-x-hidden border">
@@ -35,10 +45,14 @@ const ManageBlogs = () => {
                     </thead>
                     <tbody>
                         {result?.length > 0 ? (
-                            result?.map((item, index) => <BlogsData key={item._id} blogs={item} index={index} />)
+                            result.map((item, index) => (
+                                <BlogsData key={item._id} blogs={item} index={index} />
+                            ))
                         ) : (
                             <tr>
-                                <td colSpan="5" className="text-center py-4">No blogs available</td>
+                                <td colSpan="5" className="text-center py-4">
+                                    No blogs available
+                                </td>
                             </tr>
                         )}
                     </tbody>

@@ -1,11 +1,13 @@
 import { NavLink, useLoaderData, } from 'react-router-dom';
 import data from './../../utilities/data'
 import BlogCard from '../../components/shared/BlogCard';
+import ScrollToTop from '../../components/ScrollToTop';
 const Category = () => {
     const blogsByCategory = useLoaderData()
 
     return (
         <div className="lg:container mx-auto w-full mb-16">
+            <ScrollToTop/>
             <div className="flex gap-10 items-center lg:justify-center whitespace-nowrap overflow-x-auto px-5 py-5 bg-blue-400">
                 {
                     data.map(item =>

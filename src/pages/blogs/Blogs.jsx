@@ -6,6 +6,8 @@ import Categories from '../../components/sidebar/Categories';
 import PopularPost from '../../components/sidebar/PopularPost';
 import Loader from '../../components/Loader/Loader';
 import { Helmet } from 'react-helmet-async';
+import SocialMedia from '../../components/sidebar/SocialMedia';
+import ScrollToTop from '../../components/ScrollToTop';
 
 const Blogs = () => {
     const { blogPerPage, page, setPage, setSearch, paginationSearchBlogs } = useContext(DataContext)
@@ -32,6 +34,7 @@ const Blogs = () => {
 
     return (
         <div className='container mx-auto my-16'>
+            <ScrollToTop/>
              <Helmet>
                 <title>Blogs | BlogExpress</title>
             </Helmet>
@@ -96,6 +99,7 @@ const Blogs = () => {
                 <div className='col-span-1 px-4'>
                     <Categories />
                     <PopularPost />
+                    <SocialMedia/>
                 </div>
             </div>
         </div>

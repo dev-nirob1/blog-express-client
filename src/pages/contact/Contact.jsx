@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { FaEnvelope, FaFax, FaLocationDot } from 'react-icons/fa6'
 import { TbPhoneCall } from "react-icons/tb";
 import { toast } from 'react-toastify';
+import ScrollToTop from '../../components/ScrollToTop';
 
 const Contact = () => {
     const handleSubmit = (e)=> {
@@ -10,6 +11,7 @@ const Contact = () => {
     }
     return (
         <section className="container mx-auto pb-16 pt-8 px-2 md:px-0">
+            <ScrollToTop/>
              <Helmet>
                 <title>Contact | BlogExpress</title>
             </Helmet>

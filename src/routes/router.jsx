@@ -14,7 +14,6 @@ import ManageBlogs from "../pages/Dashboard/Admin/Blogs/ManageBlogs";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import AddBlogs from "../pages/Dashboard/AddBlogs/AddBlogs";
 import MyBlogs from "../pages/Dashboard/MyBlogs/MyBlogs";
-import Notification from "../pages/Dashboard/Notification/Notification";
 import Register from "../pages/Register/Register";
 import Login from "../pages/login/Login";
 import PrivateRoutes from "./PrivateRoutes";
@@ -22,6 +21,7 @@ import Blogs from "../pages/blogs/Blogs";
 import AdminRoutes from "./AdminRoutes";
 import AuthorRoutes from "./AuthorRoutes";
 import SharedRoutes from "./SharedRoutes";
+import Update from "../pages/Dashboard/UpdateBlog/Update";
 
 const router = createBrowserRouter([
     {
@@ -91,15 +91,16 @@ const router = createBrowserRouter([
             //common
             {
                 path: 'add-blog',
-                element: <AddBlogs />
+                element: <SharedRoutes><AddBlogs /></SharedRoutes>
             },
             {
                 path: 'my-blogs',
                 element: <SharedRoutes><MyBlogs /></SharedRoutes>
             },
             {
-                path: 'notification',
-                element: <Notification />
+                path: 'update-blog/:id',
+                element: <SharedRoutes><Update /></SharedRoutes>,
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_APIURL}/blog/${params.id}`) 
             },
 
             // author routes 

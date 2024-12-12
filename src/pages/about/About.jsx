@@ -2,10 +2,12 @@ import { Helmet } from 'react-helmet-async';
 import Quote from "../../components/Quote";
 import SectionOne from "./SectionOne";
 import SectionTwo from "./SectionTwo";
+import ScrollToTop from '../../components/ScrollToTop';
 
 const About = () => {
     return (
         <>
+        <ScrollToTop/>
             <Helmet>
                 <title>About | BlogExpress</title>
             </Helmet>

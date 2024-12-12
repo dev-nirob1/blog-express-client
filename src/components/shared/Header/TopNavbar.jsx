@@ -9,7 +9,7 @@ import Modal from "../../Modal/Modal";
 import ProfileCard from "../../Profile/ProfileCard";
 
 const TopNavbar = () => {
-    const { user, loading, logOut } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
     const { openModal, isModalOpen, closeModal, role } = useContext(DataContext)
 
     const formattedDate = moment().format('ddd DD-MM-YY');
@@ -52,24 +52,22 @@ const TopNavbar = () => {
                     <p>{formattedTime}</p>
                 </div>
                 <div className="relative">
-                    {
-                        loading ?
-                            <div className="border-2 border-black h-8 w-8 animate-spin"></div>
-                            : <div>
-                                {
-                                    user ?
-                                        <div className="flex items-center justify-center cursor-pointer" onClick={() => setOpen(!open)}>
-                                            <img className="h-12 w-12 border rounded-full" src={user?.photoURL} alt="profile image" title={user?.dispalyName} />
-                                        </div>
-                                        :
-                                        <div className="border flex items-center rounded-full">
-                                            <Link to="/login" className="p-2 hover:text-blue-600">
-                                                <FaUser size={20} />
-                                            </Link>
-                                        </div>
-                                }
-                            </div>
-                    }
+
+                    <div>
+                        {
+                            user ?
+                                <div className="flex items-center justify-center cursor-pointer" onClick={() => setOpen(!open)}>
+                                    <img className="h-12 w-12 border rounded-full" src={user?.photoURL} alt="profile image" title={user?.dispalyName} />
+                                </div>
+                                :
+                                <div className="border flex items-center rounded-full">
+                                    <Link to="/login" className="p-2 hover:text-blue-600">
+                                        <FaUser size={20} />
+                                    </Link>
+                                </div>
+                        }
+                    </div>
+
 
                     {
                         user &&

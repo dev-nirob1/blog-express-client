@@ -25,7 +25,6 @@ const AppContext = ({ children }) => {
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/users`);
-            // console.log(res.data)
             return res.data
         }
     })
@@ -36,7 +35,6 @@ const AppContext = ({ children }) => {
         queryFn: async () => {
             if (!user?.email) return null
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/users/role/${user?.email}`);
-            // console.log(res?.data?.role)
             return res?.data?.role;
         },
         enabled: !!user?.email && !loading
@@ -55,10 +53,7 @@ const AppContext = ({ children }) => {
     const UpdateUserInfoMutation = useMutation({
         mutationKey: ['user', user?.email],
         mutationFn: async (updatedData) => {
-            // console.log(updatedData, user?.email)
-
             const res = await axios.patch(`${import.meta.env.VITE_APIURL}/user/updateInfo/${user?.email}`, updatedData)
-            console.log('response', res)
             return res.data
         },
         onSuccess: () => {
@@ -92,14 +87,6 @@ const AppContext = ({ children }) => {
 
     // ********************* blogs [crud] related *****************
 
-    // // fetch all blogs 
-    // const { data: blogs = [], refetch: refetchBlogs } = useQuery({
-    //     queryKey: ['blogs'],
-    //     queryFn: async () => {
-    //         const res = await axios.get(`${import.meta.env.VITE_APIURL}/dashboard/blogs`)
-    //         return res.data
-    //     }
-    // })
 
     //get recent blogs
     const { data: recentBlogs = [] } = useQuery({
@@ -133,9 +120,10 @@ const AppContext = ({ children }) => {
             return res.data
         }
     })
+
     //fetch blogs for dashboard with pagination
     const { data: paginationBlogsDashboard = [], refetch: refetchBlogs } = useQuery({
-        queryKey: ['blogs', blogPage, blogsPerPage],
+        queryKey: ['blogs', 'dashboard', blogPage, blogsPerPage],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/dashboard/blogs`, {
                 params: {
@@ -151,9 +139,7 @@ const AppContext = ({ children }) => {
     const approveBlogMutation = useMutation({
         mutationKey: ['blog', 'approve'],
         mutationFn: async ({ id }) => {
-            console.log(id)
             const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blog/approve/${id}`)
-            console.log(res)
             return res?.data
         }
     })
@@ -162,9 +148,9 @@ const AppContext = ({ children }) => {
     const denyBlogMutation = useMutation({
         mutationKey: ['blog', 'deny'],
         mutationFn: async ({ id }) => {
-            console.log(id)
+            
             const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blog/deny/${id}`)
-            console.log(res)
+            
             return res?.data
         }
     })
@@ -173,9 +159,9 @@ const AppContext = ({ children }) => {
     const editorPickMutation = useMutation({
         mutationKey: ['blogs', 'editorsPick'],
         mutationFn: async (status) => {
-            // console.log(status.id, {status}, status.editorsPick)
+            // id, {status}, status.editorsPick)
             const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blogs/editorsPick/${status.id}`, { editorsPick: status.editorsPick })
-            // console.log(res.data)
+            // data)
             return res.data
         }
     })
@@ -185,11 +171,27 @@ const AppContext = ({ children }) => {
         mutationKey: ['blogs'],
         mutationFn: async (blogData) => {
             const res = await axios.post(`${import.meta.env.VITE_APIURL}/blogs`, blogData)
-            console.log(res.data)
+            
             return res.data
         }
     })
 
+    const updateBlogMutation = useMutation({
+        mutationKey: ['updateBlog'],
+        mutationFn: async ({ id, updatedBlogData }) => {
+            const res = await axios.patch(`${import.meta.env.VITE_APIURL}/updateBlog/${id}`, updatedBlogData);
+            return res.data;
+        }
+    });
+
+    //delete a blog
+    const deleteBlogMutation = useMutation({
+        mutationKey: ['blogs'], 
+        mutationFn: async(id) => {
+            const res = await axios.delete(`${import.meta.env.VITE_APIURL}/blog/delete/${id}`)
+            return res.data
+        }
+    })
 
 
 
@@ -204,7 +206,6 @@ const AppContext = ({ children }) => {
                     "Content-Type": 'multipart/form-data'
                 }
             })
-            // console.log('upload res from context', res, res.data)
             return res.data
         }
 
@@ -232,10 +233,12 @@ const AppContext = ({ children }) => {
         editorsPick,
         paginationSearchBlogs,
         updateEditorsPickStatus: editorPickMutation.mutateAsync,
+        updateBlog: updateBlogMutation.mutateAsync,
         storeUsers: userInfoMutation.mutate,
         updateUsersInfo: UpdateUserInfoMutation.mutateAsync,
         updateUserRole: mutation.mutateAsync,
         deleteUser: deleteUserMutation.mutateAsync,
+        deleteBlog: deleteBlogMutation.mutateAsync,
         imageUpload: uploadImageMutation.mutateAsync,
         postBlog: postBlogMutation.mutateAsync,
         updateApproveStatus: approveBlogMutation.mutateAsync,

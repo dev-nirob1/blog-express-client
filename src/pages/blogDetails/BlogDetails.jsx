@@ -5,6 +5,7 @@ import MoreFromAuthor from "./MoreAuthorContent/MoreFromAuthor";
 import AdsBanner from "../../components/AdsBanner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import ScrollToTop from "../../components/ScrollToTop";
 
 
 const BlogDetails = () => {
@@ -24,6 +25,7 @@ const BlogDetails = () => {
 
     return (
         <div className="container mx-auto my-16">
+            <ScrollToTop/>
             <div className="grid grid-cols-3 gap-5">
                 <div className="col-span-2">
                     <Details singleBlog={singleBlog} />

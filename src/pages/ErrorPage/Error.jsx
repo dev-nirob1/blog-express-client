@@ -1,9 +1,14 @@
+import { Helmet } from "react-helmet-async";
 import { FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Error = () => {
     return (
-        <div className="min-h-screen w-full flex items-center justify-center">
+        <div className="min-h-screen w-full flex items-center 
+        justify-center">
+            <Helmet>
+                            <title>Error | Blog Express</title>
+                        </Helmet>
             <div className="text-center space-y-6">
                 <h1 className="text-neutral-800 text-4xl font-bold font-serif">Page Not Found</h1>
                 <div className="text-center flex flex-col items-center">

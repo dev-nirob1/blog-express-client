@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Modal from '../../components/Modal/Modal';
+import ScrollToTop from '../../components/ScrollToTop';
 
 function AuthorInfo() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,7 @@ function AuthorInfo() {
 
     return (
         <div className="flex flex-col items-center p-8 bg-gray-100 min-h-screen">
-            {/* Profile Header */}
+            <ScrollToTop/>
             <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-6">
                 <div className="flex flex-col md:flex-row items-center md:items-start">
                     <img

@@ -16,7 +16,7 @@ const HorizontalCard = ({ blog }) => {
                             {blog?.category}
                         </p>
                     </div>
-                    <Link to='/' className="text-gray-100 font-semibold p-10 space-y-3">
+                    <Link to='/blog/_id' className="text-gray-100 font-semibold p-10 space-y-3">
                         <h1 className="text-3xl md:text-5xl hover:underline">{blog?.title}</h1>
                         <p className="text-sm md:text-base lg:text-lg hover:underline"> {sanitizeContent.length > 150 && sanitizeContent.substr(0, 150) + '...'}</p>
                     </Link>

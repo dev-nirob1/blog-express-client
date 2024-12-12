@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { FaEye } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import { DataContext } from "../../../provider/AppContext";
 import { toast } from "react-toastify";
-
-const BlogsData = ({ blogs, index }) => {
-    const { _id, title, author, status, editorsPick } = blogs
-    const { updateApproveStatus, updateDenyStatus, updateEditorsPickStatus, refetchBlogs } = useContext(DataContext)
+import Modal from "../../Modal/Modal";
+import {Helmet} from 'react-helmet-async'
+const BlogsData = ({ blogs }) => {
+    const { _id, title, titleImage, author, status, editorsPick } = blogs
+    const { isModalOpen, closeModal, openModal, updateApproveStatus, updateDenyStatus, updateEditorsPickStatus, refetchBlogs } = useContext(DataContext)
 
     const handleUpdateApprove = (blogId) => {
 
@@ -14,7 +14,7 @@ const BlogsData = ({ blogs, index }) => {
             .then(res => {
                 // console.log(res)
                 if (res?.modifiedCount === 1) {
-                toast.success('The blog has been successfully approved and is now live.')
+                    toast.success('The blog has been successfully approved and is now live.')
                     refetchBlogs()
                 }
             })
@@ -45,7 +45,7 @@ const BlogsData = ({ blogs, index }) => {
             })
             .catch(err => {
                 console.log(err)
-                alert('Something Went Wrong')
+                toast.error('Something Went Wrong')
             })
     }
 
@@ -66,11 +66,16 @@ const BlogsData = ({ blogs, index }) => {
 
     return (
         <tr className="w-full text-neutral-600 font-medium border-b">
-            <td className="p-2">{index + 1}</td>
+            <Helmet>
+                <title>{title} | Blog Express</title>
+            </Helmet>
+            <td className="p-2">
+                <img className="w-12 h-12" src={titleImage} alt="" />
+            </td>
             <td className="p-2">{title?.length > 18 ? title.substr(0, 18) + '...' : title}</td>
             <td className="p-2">
-                <div>
-                    <img className="h-8 w-8" src={author.profileImage} alt="image" />
+                <div className="flex items-center gap-2">
+                    <img className="h-8 w-8 border rounded" src={author?.profileImage} alt="image" />
                     <small>{author?.name}</small>
                 </div>
             </td>
@@ -100,8 +105,8 @@ const BlogsData = ({ blogs, index }) => {
                 </select>
             </td>
             <td className="p-2 flex gap-4 items-center justify-center">
-                <div className="border rounded p-1 cursor-pointer">
-                    <Link to={`/blog/${_id}`}><FaEye size={25} /></Link>
+                <div className="border text-blue-500 rounded p-1 cursor-pointer">
+                    <button className="flex items-center justify-center" onClick={openModal}><FaEye size={22} /></button>
                 </div>
 
                 <div className="flex flex-col">
@@ -126,7 +131,9 @@ const BlogsData = ({ blogs, index }) => {
                         Not Picked
                     </label>
                 </div>
+                <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
 
+                </Modal>
             </td>
         </tr >
     );

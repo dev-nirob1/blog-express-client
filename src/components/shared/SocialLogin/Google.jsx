@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { DataContext } from "../../../provider/AppContext";
 
 const Google = () => {
-    const { googleLogin } = useContext(AuthContext)
+    const { googleLogin} = useContext(AuthContext)
     const { storeUsers } = useContext(DataContext)
     const navigate = useNavigate()
     const location = useLocation()
@@ -29,11 +29,13 @@ const Google = () => {
                 storeUsers(userData)
                 navigate(from, { replace: true })
             })
-            .catch(err => { console.log(err.code) })
+            .catch(err => {
+                console.log(err.code)
+            })
     }
     return (
         <div className="text-center my-6">
-            <button onClick={handleGoogleLogin} className="text-white font-medium bg-blue-500 p-[10px] w-full rounded"
+            <button onClick={handleGoogleLogin} className="w-full px-4 py-2 text-white bg-blue-500 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none"
             >
                 Continue With Google
             </button>

@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { FaBars, FaBell } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../../provider/AuthProvider";
 
 const Nav = ({ setSidebarOpen, sidebarOpen, open, setOpen }) => {
     const { user } = useContext(AuthContext)
+    console.log(user)
     return (
         <div className="px-4 md:px-10 shadow border-b flex items-center justify-between h-16 bg-white">
             <div className="block md:hidden">
@@ -20,12 +20,12 @@ const Nav = ({ setSidebarOpen, sidebarOpen, open, setOpen }) => {
 
             <div className="relative flex items-center justify-center gap-2 md:gap-5">
                 <div className="relative">
-                    <Link to='/dashboard/notification' className="rounded-full block hover:bg-gray-50 p-2">
+                    <button className="rounded-full block hover:bg-gray-50 p-2">
                         <FaBell size={20} />
-                    </Link>
+                    </button>
                 </div>
                 <div className="cursor-pointer" onClick={() => setOpen(!open)}>
-                    <img alt={'user'} className="w-10 h-10 rounded-full" src={user?.photoUrl} title={user?.displayName} />
+                    <img alt={'user'} className="w-10 h-10 rounded-full" src={user?.photoURL} title={user?.displayName} />
                 </div>
 
             </div>
