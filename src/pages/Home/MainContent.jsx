@@ -1,5 +1,5 @@
 import AdsBanner from "../../components/AdsBanner";
-import EditorsPick from "../../components/EditorsPick";
+import EditorsPick from "../../components/EditorsPick/EditorsPick";
 import RecentBlogs from "../../components/recentblogs/RecentBlogs";
 
 const MainContent = () => {

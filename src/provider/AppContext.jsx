@@ -7,14 +7,21 @@ export const DataContext = createContext()
 
 const AppContext = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
     const queryClient = useQueryClient();
 
     const [page, setPage] = useState(1);
+    const [blogPage, setBlogPage] = useState(1) //for dashboard
     const [search, setSearch] = useState('')
-    const blogPerPage = 3
+    const blogPerPage = 4
+    const blogsPerPage = 5 //dashboard
 
     //get all users
-    const { data: users = [], refetch: refetchUsers } = useQuery({
+    const { data: allUsers = [], refetch: refetchUsers } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/users`);
@@ -29,7 +36,7 @@ const AppContext = ({ children }) => {
         queryFn: async () => {
             if (!user?.email) return null
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/users/role/${user?.email}`);
-            console.log(res?.data?.role)
+            // console.log(res?.data?.role)
             return res?.data?.role;
         },
         enabled: !!user?.email && !loading
@@ -41,6 +48,21 @@ const AppContext = ({ children }) => {
         mutationFn: async (userData) => {
             const res = await axios.post(`${import.meta.env.VITE_APIURL}/users`, userData)
             return res.data
+        }
+    })
+
+    //update users info to databse
+    const UpdateUserInfoMutation = useMutation({
+        mutationKey: ['user', user?.email],
+        mutationFn: async (updatedData) => {
+            // console.log(updatedData, user?.email)
+
+            const res = await axios.patch(`${import.meta.env.VITE_APIURL}/user/updateInfo/${user?.email}`, updatedData)
+            console.log('response', res)
+            return res.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users']);
         }
     })
 
@@ -70,21 +92,20 @@ const AppContext = ({ children }) => {
 
     // ********************* blogs [crud] related *****************
 
-    // fetch all blogs 
-    const { data: blogs = [], refetch: refetchBlogs } = useQuery({
-        queryKey: ['blogs'],
-        queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/dashboard/blogs`)
-            return res.data
-        }
-    })
+    // // fetch all blogs 
+    // const { data: blogs = [], refetch: refetchBlogs } = useQuery({
+    //     queryKey: ['blogs'],
+    //     queryFn: async () => {
+    //         const res = await axios.get(`${import.meta.env.VITE_APIURL}/dashboard/blogs`)
+    //         return res.data
+    //     }
+    // })
 
- 
     //get recent blogs
     const { data: recentBlogs = [] } = useQuery({
         queryKey: ['recentBlogs'],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs/recentBlogs`)
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/recentBlogs`)
             return res.data
         }
     })
@@ -93,7 +114,7 @@ const AppContext = ({ children }) => {
     const { data: editorsPick = [] } = useQuery({
         queryKey: ['blogs', 'editorsPick'],
         queryFn: async () => {
-            const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs/editorsPick`)
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/editorsPick`)
             return res.data
         }
     })
@@ -112,6 +133,19 @@ const AppContext = ({ children }) => {
             return res.data
         }
     })
+    //fetch blogs for dashboard with pagination
+    const { data: paginationBlogsDashboard = [], refetch: refetchBlogs } = useQuery({
+        queryKey: ['blogs', blogPage, blogsPerPage],
+        queryFn: async () => {
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/dashboard/blogs`, {
+                params: {
+                    blogPage,
+                    limit: blogsPerPage,
+                }
+            })
+            return res.data
+        }
+    })
 
     // approve a blog (admin)
     const approveBlogMutation = useMutation({
@@ -123,6 +157,7 @@ const AppContext = ({ children }) => {
             return res?.data
         }
     })
+
     // deny a blog (admin)
     const denyBlogMutation = useMutation({
         mutationKey: ['blog', 'deny'],
@@ -139,7 +174,7 @@ const AppContext = ({ children }) => {
         mutationKey: ['blogs', 'editorsPick'],
         mutationFn: async (status) => {
             // console.log(status.id, {status}, status.editorsPick)
-            const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blogs/editorsPick/${status.id}`, {editorsPick: status.editorsPick})
+            const res = await axios.patch(`${import.meta.env.VITE_APIURL}/blogs/editorsPick/${status.id}`, { editorsPick: status.editorsPick })
             // console.log(res.data)
             return res.data
         }
@@ -177,25 +212,32 @@ const AppContext = ({ children }) => {
 
 
     const data = {
+        isModalOpen,
+        openModal,
+        closeModal,
         refetchUsers,
         refetchBlogs,
         page,
         setPage,
+        blogPage,
+        setBlogPage,
+        blogsPerPage,
         setSearch,
         blogPerPage,
         role,
         loading,
-        users,
-        blogs,
+        allUsers,
+        paginationBlogsDashboard,
         recentBlogs,
         editorsPick,
-        updateEditorsPickStatus: editorPickMutation.mutateAsync,
         paginationSearchBlogs,
+        updateEditorsPickStatus: editorPickMutation.mutateAsync,
         storeUsers: userInfoMutation.mutate,
-        updateUserRole: mutation.mutate,
-        deleteUser: deleteUserMutation.mutate,
+        updateUsersInfo: UpdateUserInfoMutation.mutateAsync,
+        updateUserRole: mutation.mutateAsync,
+        deleteUser: deleteUserMutation.mutateAsync,
         imageUpload: uploadImageMutation.mutateAsync,
-        postBlog: postBlogMutation.mutate,
+        postBlog: postBlogMutation.mutateAsync,
         updateApproveStatus: approveBlogMutation.mutateAsync,
         updateDenyStatus: denyBlogMutation.mutateAsync
     }

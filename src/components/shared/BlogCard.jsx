@@ -8,7 +8,7 @@ const BlogCard = ({ blog }) => {
         <div className="flex flex-col border p-3 rounded-lg">
             <div className="relative">
                 <img src={titleImage} className="rounded-t-lg w-full h-52" alt="banner image" />
-                <p className="rounded-full font-serif px-2 text-gray-50 bg-blue-500 absolute top-5 right-4">{category}</p>
+                <p className="rounded-full font-serif px-2 text-gray-50 bg-blue-600 absolute top-5 right-4">{category}</p>
             </div>
             <div className="mt-5">
                 <Link to={`/author/${author.email}`} className="flex items-center justify-start gap-3 mb-2 w-fit group">

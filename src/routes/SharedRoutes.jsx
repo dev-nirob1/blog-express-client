@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader/Loader";
 import { toast } from "react-toastify";
 
-const AdminRoutes = ({ children }) => {
+const SharedRoutes = ({ children }) => {
     const { user, loading } = useContext(AuthContext);
     const { role } = useContext(DataContext);
     const [isRoleLoading, setIsRoleLoading] = useState(true);
@@ -13,7 +13,7 @@ const AdminRoutes = ({ children }) => {
 
     useEffect(() => {
         if (!loading && !isRoleLoading) {
-            if (!user || !user.email || role !== 'admin') {
+            if (!user || !user.email || (role !== 'author' && role !== 'admin')) {
                 toast.error("You are not authorized to access this page.");
                 navigate("/");
             }
@@ -34,4 +34,4 @@ const AdminRoutes = ({ children }) => {
     return children;
 };
 
-export default AdminRoutes;
+export default SharedRoutes;

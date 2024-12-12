@@ -1,16 +1,25 @@
-import { useContext } from "react";
+import { useContext} from "react";
 import BlogsData from "../../../../components/dashboard/blogsData/BlogsData";
 import OutletSearchbar from "../../../../components/dashboard/common/OutletSearchbar";
 import { DataContext } from "../../../../provider/AppContext";
 
 const ManageBlogs = () => {
-    const { blogs } = useContext(DataContext)
-    
+    const { blogPage, setBlogPage, blogsPerPage, paginationBlogsDashboard } = useContext(DataContext)
+   
+    const { result = [], totalBlogs } = paginationBlogsDashboard;
+    const totalPages = Math.ceil(totalBlogs / blogsPerPage)
+
+    const handlePageChange = (newPage) => {
+        setBlogPage(newPage)
+    }
+
+    const pages = totalPages > 0 ? [...Array(totalPages).keys()] : [];
+
     return (
         <div className="py-5 w-[95%] mx-auto">
             <OutletSearchbar
                 routeName='Total blogs'
-                length={blogs?.length}
+                length={totalBlogs}
             />
 
             <div className="overflow-x-auto">
@@ -25,9 +34,48 @@ const ManageBlogs = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {blogs?.map((item, index) => <BlogsData key={item._id} blogs={item} index={index} />)}
+                        {result?.length > 0 ? (
+                            result?.map((item, index) => <BlogsData key={item._id} blogs={item} index={index} />)
+                        ) : (
+                            <tr>
+                                <td colSpan="5" className="text-center py-4">No blogs available</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
+
+                {totalPages > 1 && <div className="flex justify-center mt-8">
+                    <nav className="inline-flex space-x-2">
+                        {/* Previous Button */}
+                        <button
+                            onClick={() => handlePageChange(blogPage - 1)}
+                            disabled={blogPage === 1}
+                            className="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 disabled:opacity-50"
+                        >
+                            Previous
+                        </button>
+
+                        {/* Page Numbers */}
+                        {
+                            pages.map((item, i) => <button
+                                key={i}
+                                onClick={() => handlePageChange(item + 1)}
+                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                            >
+                                {item + 1}
+                            </button>)
+                        }
+
+                        {/* Next Button */}
+                        <button
+                            onClick={() => handlePageChange(blogPage + 1)}
+                            disabled={blogPage === totalPages}
+                            className="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 disabled:opacity-50"
+                        >
+                            Next
+                        </button>
+                    </nav>
+                </div>}
             </div>
         </div>
     );

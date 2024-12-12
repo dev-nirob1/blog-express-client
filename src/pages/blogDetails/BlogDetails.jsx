@@ -12,9 +12,9 @@ const BlogDetails = () => {
     // console.log(singleBlog)
 
     const { data: authorBlogs = [] } = useQuery({
-        queryKey: ['blogs', singleBlog.author?.email], // Query key depends on the author's email
+        queryKey: ['blogs', singleBlog.author?.email],
         queryFn: async () => {
-            if (!singleBlog.author?.email) return []; // Handle case where email is not available
+            if (!singleBlog.author?.email) return [];
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/blogs/${singleBlog.author?.email}`);
             return res.data;
         },
@@ -28,8 +28,8 @@ const BlogDetails = () => {
                 <div className="col-span-2">
                     <Details singleBlog={singleBlog} />
                     <AdsBanner />
-                   { <MoreFromAuthor blogs={filterdBlogs} />}
-                    
+                    {filterdBlogs.length > 0 && <MoreFromAuthor blogs={filterdBlogs} />}
+
                 </div>
                 <div>
                     <SideMenu></SideMenu>

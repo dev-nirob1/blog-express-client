@@ -7,16 +7,18 @@ import { AuthContext } from "../../../provider/AuthProvider";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { toolbarOptions } from "../../../utilities/modules";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddBlogs = () => {
-    const { imageUpload, postBlog } = useContext(DataContext)
+    const { imageUpload, postBlog, role } = useContext(DataContext)
     const { user } = useContext(AuthContext)
     const [content, setContent] = useState('');
     const { register, handleSubmit } = useForm()
     const [file, setFile] = useState(null)
     const [imagePreview, setImagePreview] = useState('')
     const quillRef = useRef(null);
-
+    const navigate = useNavigate()
     const onSubmit = async (data) => {
 
         if (!file && content === '') {
@@ -41,22 +43,19 @@ const AddBlogs = () => {
                     postAt: new Date(),
                     likesCount: 0,
                     commentsCount: 0,
-                    approved: false,
+                    approved: role === 'admin',
                     denied: false,
                     editorsPick: false,
-                    status: 'pending'
+                    status: role === 'admin' ? 'approved' : 'pending'
                 }
 
                 postBlog(blogData, {
                     onSuccess: data => {
                         console.log('post response', data)
-                        if (data.insertedId) {
-                            alert('Blog posted successfully!')
+                        if (data.acknowledged) {
+                            toast.success('Blog posted successfully!')
+                            navigate('/dashboard/my-blogs')
                         }
-                    },
-                    onError: (error) => {
-                        console.error('Error posting blog:', error);
-                        alert('Failed to post blog. Please try again.');
                     }
                 });
 
@@ -70,7 +69,6 @@ const AddBlogs = () => {
         setImagePreview('');
     };
 
-    //todo: upload image ui
     return (
         <div className="py-5 h-full w-[95%] mx-auto">
             <div>
@@ -107,7 +105,7 @@ const AddBlogs = () => {
                                     </div>
 
                                     <div className="text-center">
-                                        <h5 className="whitespace-nowrap text-lg font-medium tracking-tight">{file?.name}</h5>
+                                        <h5 className="whitespace-nowrap text-lg font-medium tracking-tight">{file?.name.slice(0, 50) + '...'}</h5>
                                         <p className="text-gray-500">{(file?.size / 1024).toFixed(1)} KB</p>
                                     </div>
                                 </div>
@@ -122,11 +120,11 @@ const AddBlogs = () => {
 
                     <input onChange={(e) => {
                         const selectedFile = e.target.files[0]
-                        console.log(e.target.files[0])
+                        // console.log(e.target.files[0])
                         const preview = URL.createObjectURL(selectedFile)
                         setFile(selectedFile)
                         setImagePreview(preview)
-                    }} className="hidden" id="upload-image" type="file" accept="image/jpg, image/jpeg, image/png" />
+                    }} className="hidden" id="upload-image" type="file" accept="image/jpg, image/jpeg, image/png, image/webp" />
 
 
                     <div className="mb-6">
@@ -136,10 +134,11 @@ const AddBlogs = () => {
                             value={content}
                             onChange={setContent}
                             ref={quillRef}
+                            placeholder="Write Here..."
                         />
                     </div>
 
-                    <input className="block bg-blue-500 text-white w-full py-2 rounded font-medium cursor-pointer" type="submit" />
+                    <button className="block bg-blue-500 text-white w-full py-2 rounded font-medium cursor-pointer" type="submit">Post</button>
                 </form>
             </div>
         </div>

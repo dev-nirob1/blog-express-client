@@ -16,9 +16,13 @@ const Google = () => {
             .then(result => {
                 const loggedUser = result.user;
                 const userData = {
-                    name: loggedUser?.displayName,
+                    name: loggedUser?.displayName || 'unknown',
                     email: loggedUser?.email,
-                    profileImage: loggedUser?.photoURL,
+                    profileImage: loggedUser?.photoURL || 'https://i.ibb.co.com/zFMrg3c/avatar.png',
+                    address: null,
+                    phone: null,
+                    dob: null,
+                    bio: '',
                     userSince: new Date(),
                     role: 'user'
                 }

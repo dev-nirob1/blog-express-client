@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { DataContext } from "../../provider/AppContext";
+import { toast } from 'react-toastify'
 
 const Register = () => {
     const { createUser } = useContext(AuthContext)
@@ -21,18 +22,22 @@ const Register = () => {
                 const userData = {
                     name: user?.displayName || data.name,
                     email: user?.email,
-                    profileImage: user?.photoURL || '',
+                    profileImage: user?.photoURL || 'https://i.ibb.co.com/zFMrg3c/avatar.png',
+                    address: null,
+                    phone: null,
+                    dob: null,
+                    bio: '',
                     userSince: new Date(),
                     role: 'user'
                 }
                 storeUsers(userData)
                 if (user && user?.email)
-                    alert('Registration Successfull')
+                    toast.success('Registration Successfull')
                 navigate(from, { replace: true })
             })
             .catch(err => {
                 const errorMessage = err.code.split('/')[1].split('-').join(' ')
-                alert(errorMessage)
+                toast.success(errorMessage)
             })
     }
 

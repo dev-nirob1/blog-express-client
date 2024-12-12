@@ -4,11 +4,13 @@ import { AuthContext } from '../../provider/AuthProvider';
 import BlogCard from '../../components/shared/BlogCard';
 import Categories from '../../components/sidebar/Categories';
 import PopularPost from '../../components/sidebar/PopularPost';
+import Loader from '../../components/Loader/Loader';
+import { Helmet } from 'react-helmet-async';
 
 const Blogs = () => {
     const { blogPerPage, page, setPage, setSearch, paginationSearchBlogs } = useContext(DataContext)
     const { loading } = useContext(AuthContext)
-    // console.log(paginationSearchBlogs)
+
     const { blogs = [], total } = paginationSearchBlogs;
 
     const handlePageChange = (newPage) => {
@@ -17,7 +19,7 @@ const Blogs = () => {
 
     const handleSearchQuery = (e) => {
         const query = e.target.value;
-        console.log(query)
+        // console.log(query)
         setSearch(query)
         setPage(1)
     }
@@ -26,18 +28,16 @@ const Blogs = () => {
 
     const pages = totalPages > 0 ? [...Array(totalPages).keys()] : [];
 
-    console.log(paginationSearchBlogs)
+    if (loading) return <Loader />
 
-    if (loading) {
-        return <div className='text-5xl'>loading...</div>
-    }
     return (
         <div className='container mx-auto my-16'>
+             <Helmet>
+                <title>Blogs | BlogExpress</title>
+            </Helmet>
             <div className='grid lg:grid-cols-3 gap-3'>
                 <div className="lg:col-span-2 px-4">
-                    {/* Search Bar */}
                     <div className="text-center mb-8">
-                        {/* <h1>blogs</h1> */}
                         <input
                             onChange={handleSearchQuery}
                             type="search"
@@ -46,15 +46,13 @@ const Blogs = () => {
                         />
                     </div>
 
-                    {/* Blogs List */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {/* Blog Card */}
 
                         {
                             blogs?.length > 0 ?
                                 blogs.map(item => <BlogCard key={item._id} blog={item} />)
                                 :
-                                <div className="text-center text-xl">No blogs found.</div>
+                                <div className="w-full col-span-full text-center text-xl">No blogs found.</div>
 
                         }
 

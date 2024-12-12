@@ -15,13 +15,13 @@ import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import AddBlogs from "../pages/Dashboard/AddBlogs/AddBlogs";
 import MyBlogs from "../pages/Dashboard/MyBlogs/MyBlogs";
 import Notification from "../pages/Dashboard/Notification/Notification";
-import Profile from "../pages/Dashboard/profile/Profile";
 import Register from "../pages/Register/Register";
 import Login from "../pages/login/Login";
 import PrivateRoutes from "./PrivateRoutes";
 import Blogs from "../pages/blogs/Blogs";
 import AdminRoutes from "./AdminRoutes";
 import AuthorRoutes from "./AuthorRoutes";
+import SharedRoutes from "./SharedRoutes";
 
 const router = createBrowserRouter([
     {
@@ -44,11 +44,12 @@ const router = createBrowserRouter([
             {
                 path: "/blog/:id",
                 element: <PrivateRoutes><BlogDetails /></PrivateRoutes>,
-                loader: ({params})=> fetch(`${import.meta.env.VITE_APIURL}/blog/${params.id}`)
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_APIURL}/blog/${params.id}`)
             },
             {
                 path: "/blogs/:category",
-                element: <PrivateRoutes><Category /></PrivateRoutes>
+                element: <PrivateRoutes><Category /></PrivateRoutes>,
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_APIURL}/blogs/${params.category}`)
             },
             {
                 path: "/author/:email",
@@ -75,7 +76,7 @@ const router = createBrowserRouter([
         children: [
             // admin routes 
             {
-                path: 'admin',
+                path: '/dashboard/admin',
                 element: <AdminRoutes><AdminHome /></AdminRoutes>
             },
             {
@@ -94,20 +95,16 @@ const router = createBrowserRouter([
             },
             {
                 path: 'my-blogs',
-                element: <AuthorRoutes><MyBlogs /></AuthorRoutes>
+                element: <SharedRoutes><MyBlogs /></SharedRoutes>
             },
             {
                 path: 'notification',
                 element: <Notification />
             },
-            {
-                path: 'profile',
-                element: <Profile />
-            },
 
             // author routes 
             {
-                path: 'author',
+                path: '/dashboard/author',
                 element: <AuthorRoutes><AuthorHome /></AuthorRoutes>
             },
         ]

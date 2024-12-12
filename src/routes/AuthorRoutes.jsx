@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { DataContext } from "../provider/AppContext";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader/Loader";
+import { toast } from "react-toastify";
 
 const AdminRoutes = ({ children }) => {
     const { user, loading } = useContext(AuthContext);
@@ -12,7 +14,7 @@ const AdminRoutes = ({ children }) => {
     useEffect(() => {
         if (!loading && !isRoleLoading) {
             if (!user || !user.email || role !== 'author') {
-                alert("You are not authorized to access this page.");
+                toast.error("You are not authorized to access this page.");
                 navigate("/");
             }
         }
@@ -20,13 +22,13 @@ const AdminRoutes = ({ children }) => {
 
     useEffect(() => {
         if (role) {
-            setIsRoleLoading(false);  // Set loading to false once role is fetched
+            setIsRoleLoading(false);  
         }
     }, [role]);
 
 
     if (loading || isRoleLoading) {
-        return <div className="text-5xl">loading...</div>;
+        return <Loader/>;
     }
 
     return children;

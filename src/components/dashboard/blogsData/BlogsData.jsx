@@ -2,26 +2,22 @@ import { useContext } from "react";
 import { FaEye } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { DataContext } from "../../../provider/AppContext";
+import { toast } from "react-toastify";
 
 const BlogsData = ({ blogs, index }) => {
     const { _id, title, author, status, editorsPick } = blogs
-    // console.log(blogs)
     const { updateApproveStatus, updateDenyStatus, updateEditorsPickStatus, refetchBlogs } = useContext(DataContext)
 
     const handleUpdateApprove = (blogId) => {
 
         updateApproveStatus({ id: blogId })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res?.modifiedCount === 1) {
-                    alert('The blog has been successfully approved and is now live.')
+                toast.success('The blog has been successfully approved and is now live.')
                     refetchBlogs()
                 }
             })
-            .catch(err => {
-                console.log(err);
-                alert('An error occurred while approving the blog. Please try again.');
-            });
     }
 
     const handleUpdateDeny = (blogId) => {
@@ -29,13 +25,9 @@ const BlogsData = ({ blogs, index }) => {
             .then(res => {
                 // console.log(res)
                 if (res?.modifiedCount === 1) {
-                    alert('The blog has been successfully marked as denied.');
+                    toast.success('The blog has been successfully marked as denied.');
                     refetchBlogs()
                 }
-            })
-            .catch(err => {
-                console.log(err)
-                alert('An error occurred while denying the blog. Please try again.');
             })
     }
 
@@ -47,7 +39,7 @@ const BlogsData = ({ blogs, index }) => {
         updateEditorsPickStatus(status)
             .then(res => {
                 if (res?.modifiedCount === 1) {
-                    alert("Success! This blog has been featured as an Editor's Pick.")
+                    toast.success("Success! This blog has been featured as an Editor's Pick.")
                     refetchBlogs()
                 }
             })
@@ -65,7 +57,7 @@ const BlogsData = ({ blogs, index }) => {
         updateEditorsPickStatus(status)
             .then(res => {
                 if (res?.modifiedCount === 1) {
-                    alert("The blog has been removed from the Editor's Picks list.")
+                    toast.success("The blog has been removed from the Editor's Picks list.")
                     refetchBlogs()
                 }
             })
@@ -78,7 +70,7 @@ const BlogsData = ({ blogs, index }) => {
             <td className="p-2">{title?.length > 18 ? title.substr(0, 18) + '...' : title}</td>
             <td className="p-2">
                 <div>
-                    <img src={author.profileImage} alt="image" />
+                    <img className="h-8 w-8" src={author.profileImage} alt="image" />
                     <small>{author?.name}</small>
                 </div>
             </td>

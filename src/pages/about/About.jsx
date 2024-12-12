@@ -1,4 +1,4 @@
-
+import { Helmet } from 'react-helmet-async';
 import Quote from "../../components/Quote";
 import SectionOne from "./SectionOne";
 import SectionTwo from "./SectionTwo";
@@ -6,6 +6,10 @@ import SectionTwo from "./SectionTwo";
 const About = () => {
     return (
         <>
+            <Helmet>
+                <title>About | BlogExpress</title>
+            </Helmet>
+            
             <div className="space-y-10 py-16 px-2 md:px-0 container mx-auto">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold mb-5 text-gray-800 font-serif">About Us</h1>

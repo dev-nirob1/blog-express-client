@@ -26,12 +26,6 @@ const Author = () => {
                         <FaEdit size={25} /> Add Blog
                     </Link>
                 </li>
-                <li className="border-b">
-                    <Link to='/dashboard/profile' className="py-2 hover:bg-gray-50 flex items-center gap-3">
-                        <img src="/banner.jpg" className="h-7 w-7 rounded-full" alt="profile image" />
-                         Profile
-                    </Link>
-                </li>
             </ul>
             <div className="text-lg md:text-xl font-semibold mt-10">
                 <button onClick={()=>{logOut()}} className="py-2 hover:bg-gray-50 w-full flex items-center gap-3">

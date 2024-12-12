@@ -2,6 +2,7 @@ import OutletSearchbar from "../../../components/dashboard/common/OutletSearchba
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 
 const MyBlogs = () => {
+    
     return (
         <div className="py-5 w-[95%] mx-auto">
             <OutletSearchbar

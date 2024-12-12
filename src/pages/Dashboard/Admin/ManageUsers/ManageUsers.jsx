@@ -1,17 +1,16 @@
 import UsersData from "../../../../components/dashboard/UsersData/UsersData";
 import OutletSearchbar from "../../../../components/dashboard/common/OutletSearchbar";
-import { useContext } from "react";
+import { useContext} from "react";
 import { DataContext } from "../../../../provider/AppContext";
 
 const ManageUsers = () => {
-
-    const { users } = useContext(DataContext)
+    const { allUsers } = useContext(DataContext)
 
     return (
         <div className="py-5 w-[95%] mx-auto">
             <OutletSearchbar
                 routeName='Total Users'
-                length={users.length}
+                length={allUsers.length}
             />
 
             <div className="overflow-x-auto">
@@ -28,7 +27,7 @@ const ManageUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map((userData, index) => <UsersData key={userData._id} userData={userData} index={index} />)
+                            allUsers.map((userData, index) => <UsersData key={userData._id} userData={userData} index={index} />)
                         }
                     </tbody>
                 </table>
