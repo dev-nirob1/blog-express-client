@@ -1,4 +1,5 @@
 import Categories from "./Categories";
+import Newsletter from "./NewsLetter/NewsLetter";
 import PopularPost from "./PopularPost";
 import SidebarAds from "./SidebarAds";
 import SocialMedia from "./SocialMedia";
@@ -11,6 +12,7 @@ const SideMenu = () => {
             <PopularPost />
             <SocialMedia />
             <SidebarAds/>
+            <Newsletter/>
         </div>
     );
 };

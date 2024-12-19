@@ -1,13 +1,8 @@
 import { FaEye, FaTrash } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { DataContext } from "../../../provider/AppContext";
-import Modal from "../../../components/Modal/Modal";
-import ViewBlog from "../../../components/dashboard/ViewBlog/ViewBlog";
 
-const Data = ({ blog, index, handleDelete }) => {
-    const { openModal, closeModal, isModalOpen } = useContext(DataContext)
+const Data = ({ blog, index, handleDelete, handleOpenModal }) => {
 
     const {
         _id,
@@ -45,7 +40,7 @@ const Data = ({ blog, index, handleDelete }) => {
                 )}
             </td>
             <td className=" py-2 flex items-center gap-3">
-                <button onClick={openModal} className="border p-1 rounded text-blue-500">
+                <button onClick={() => handleOpenModal(_id)} className="border p-1 rounded text-blue-500">
                     <FaEye size={21} />
                 </button>
                 <Link to={`/dashboard/update-blog/${_id}`} className="border p-1 rounded text-green-500">
@@ -55,9 +50,7 @@ const Data = ({ blog, index, handleDelete }) => {
                     <FaTrash size={21} />
                 </button>
             </td>
-            <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-                <ViewBlog />
-            </Modal>
+
         </tr>
     );
 };

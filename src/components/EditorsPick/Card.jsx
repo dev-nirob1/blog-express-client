@@ -6,7 +6,7 @@ const Card = ({ item }) => {
 
     return (
         <div key={item}
-            className="flex flex-col md:flex-row gap-6 md:items-center p-5 border md:border-0 my-8">
+            className="flex flex-col md:flex-row gap-6 md:items-center p-2 border md:border-0 my-8">
 
             <div className="relative h-full w-full">
                 <img src={titleImage} className="h-full w-full" alt="title image" />

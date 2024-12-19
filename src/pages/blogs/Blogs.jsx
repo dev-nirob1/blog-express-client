@@ -8,6 +8,9 @@ import Loader from '../../components/Loader/Loader';
 import { Helmet } from 'react-helmet-async';
 import SocialMedia from '../../components/sidebar/SocialMedia';
 import ScrollToTop from '../../components/ScrollToTop';
+import Newsletter from '../../components/sidebar/NewsLetter/NewsLetter';
+import AdsBanner from '../../components/AdsBanner';
+import PaginationButton from '../../components/PaginationButton';
 
 const Blogs = () => {
     const { blogPerPage, page, setPage, setSearch, paginationSearchBlogs } = useContext(DataContext)
@@ -34,8 +37,8 @@ const Blogs = () => {
 
     return (
         <div className='container mx-auto my-16'>
-            <ScrollToTop/>
-             <Helmet>
+            <ScrollToTop />
+            <Helmet>
                 <title>Blogs | BlogExpress</title>
             </Helmet>
             <div className='grid lg:grid-cols-3 gap-3'>
@@ -62,44 +65,17 @@ const Blogs = () => {
                     </div>
 
                     {/* Pagination */}
-                    {totalPages > 1 && <div className="flex justify-center mt-8">
-                        <nav className="inline-flex space-x-2">
-                            {/* Previous Button */}
-                            <button
-                                onClick={() => handlePageChange(page - 1)}
-                                disabled={page === 1}
-                                className="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 disabled:opacity-50"
-                            >
-                                Previous
-                            </button>
+                    {totalPages > 1 && <PaginationButton handlePageChange={handlePageChange} page={page} pages={pages} totalPages={totalPages} />
+                    }
 
-                            {/* Page Numbers */}
-                            {
-                                pages.map((item, i) => <button
-                                    key={i}
-                                    onClick={() => handlePageChange(item + 1)}
-                                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                                >
-                                    {item + 1}
-                                </button>)
-                            }
-
-                            {/* Next Button */}
-                            <button
-                                onClick={() => handlePageChange(page + 1)}
-                                disabled={page === totalPages}
-                                className="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 disabled:opacity-50"
-                            >
-                                Next
-                            </button>
-                        </nav>
-                    </div>}
+                    <AdsBanner />
 
                 </div>
                 <div className='col-span-1 px-4'>
                     <Categories />
                     <PopularPost />
-                    <SocialMedia/>
+                    <SocialMedia />
+                    <Newsletter />
                 </div>
             </div>
         </div>

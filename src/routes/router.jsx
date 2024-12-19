@@ -5,7 +5,6 @@ import Contact from "../pages/contact/Contact";
 import About from "../pages/about/About";
 import Category from "../pages/blogCategory/Category";
 import BlogDetails from "../pages/blogDetails/BlogDetails";
-import AuthorInfo from "../pages/author/AuthorInfo";
 import Error from "../pages/ErrorPage/Error";
 import Dashboard from "../layout/Dashboard/Dashboard";
 import AdminHome from "../pages/Dashboard/Admin/AdminHome";
@@ -50,10 +49,6 @@ const router = createBrowserRouter([
                 path: "/blogs/:category",
                 element: <PrivateRoutes><Category /></PrivateRoutes>,
                 loader: ({ params }) => fetch(`${import.meta.env.VITE_APIURL}/blogs/${params.category}`)
-            },
-            {
-                path: "/author/:email",
-                element: <AuthorInfo />
             },
             {
                 path: "/login",

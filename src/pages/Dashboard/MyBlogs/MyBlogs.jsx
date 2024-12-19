@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import OutletSearchbar from "../../../components/dashboard/common/OutletSearchbar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
 import Loader from "../../../components/Loader/Loader";
 import Data from "./Data";
@@ -9,10 +9,14 @@ import { DataContext } from "../../../provider/AppContext";
 import Swal from "sweetalert2/dist/sweetalert2";
 import { Helmet } from "react-helmet-async";
 import ScrollToTop from "../../../components/ScrollToTop";
+import Modal from "../../../components/Modal/Modal";
+import ViewBlog from "../../../components/dashboard/ViewBlog/ViewBlog";
 
 const MyBlogs = () => {
+    const [blogId, setBlogId] = useState('')
+
     const { user } = useContext(AuthContext)
-    const { deleteBlog, refetchBlogs } = useContext(DataContext)
+    const { deleteBlog, refetchBlogs, openModal, closeModal, isModalOpen } = useContext(DataContext)
 
     const { data: blogs = [], isLoading } = useQuery({
         queryKey: ["blogs", user?.email],
@@ -43,11 +47,16 @@ const MyBlogs = () => {
         });
     }
 
+    const handleOpenModal = (id) => {
+        setBlogId(id)
+        openModal()
+    }
+
     if (isLoading) return <Loader />;
 
     return (
         <div className="py-5 w-[95%] mx-auto">
-            <ScrollToTop/>
+            <ScrollToTop />
             <Helmet>
                 <title>My Blogs | Blog Express</title>
             </Helmet>
@@ -70,6 +79,7 @@ const MyBlogs = () => {
                         <tbody>
                             {
                                 blogs?.map((blog, index) => <Data
+                                    handleOpenModal={handleOpenModal}
                                     key={blog._id} blog={blog}
                                     handleDelete={handleDelete}
                                     index={index} />)
@@ -78,6 +88,9 @@ const MyBlogs = () => {
                     </table>
                 )}
             </div>
+            <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
+                <ViewBlog id={blogId} />
+            </Modal>
         </div>
     );
 };

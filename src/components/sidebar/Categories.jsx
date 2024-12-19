@@ -15,7 +15,7 @@ const Categories = () => {
             {categories.map((item, i) => <ul key={i}>
                 <li className="border-t py-3 px-1 font-medium text-neutral-800 flex justify-between items-center ">
                     <Link className="hover:text-blue-500 hover:underline" to={`/blogs/${item}`}>{item}</Link>
-                    <span>(2)</span>
+                    {/* <span>(2)</span> */}
                 </li>
               
             </ul>)}

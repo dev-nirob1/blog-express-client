@@ -14,7 +14,7 @@ const UsersData = ({ userData, index }) => {
     const handleUserRoleChange = async (e) => {
         const role = e.target.value;
         const res = await updateUserRole({ email, role })
-        console.log(res);
+        
         if (res?.modifiedCount === 1) {
             toast.success('Role Updated')
         }

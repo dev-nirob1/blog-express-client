@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import BlogsData from "../../../../components/dashboard/blogsData/BlogsData";
 import OutletSearchbar from "../../../../components/dashboard/common/OutletSearchbar";
 import { DataContext } from "../../../../provider/AppContext";
@@ -6,27 +6,60 @@ import Loader from "../../../../components/Loader/Loader";
 import { AuthContext } from "../../../../provider/AuthProvider";
 import { Helmet } from "react-helmet-async";
 import ScrollToTop from "../../../../components/ScrollToTop";
+import Modal from "../../../../components/Modal/Modal";
+import ViewBlog from "../../../../components/dashboard/ViewBlog/ViewBlog";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import PaginationButton from "../../../../components/PaginationButton";
 
 const ManageBlogs = () => {
-    const { blogPage, setBlogPage, blogsPerPage, paginationBlogsDashboard } = useContext(DataContext);
-    const {loading} = useContext(AuthContext)
-    
+    const [blogId, setBlogId] = useState('')
+    const { loading } = useContext(AuthContext)
+    const [page, setPage] = useState(1)
+    const blogsPerPage = 5;
+
+    const {
+        openModal,
+        isModalOpen,
+        closeModal, } = useContext(DataContext);
+
+    const { data: paginationBlogsDashboard = [] } = useQuery({
+        queryKey: ['blogs', 'dashboard', page, blogsPerPage],
+        queryFn: async () => {
+            const res = await axios.get(`${import.meta.env.VITE_APIURL}/dashboard/blogs`, {
+                params: {
+                    page,
+                    limit: blogsPerPage,
+                }
+            })
+            return res.data
+        }
+    })
+
     const { result = [], totalBlogs } = paginationBlogsDashboard;
     const totalPages = Math.ceil(totalBlogs / blogsPerPage);
 
     const handlePageChange = (newPage) => {
-        setBlogPage(newPage)
+        setPage(newPage)
     }
 
     const pages = totalPages > 0 ? [...Array(totalPages).keys()] : [];
-    console.log('data',result, 'totalpages',totalPages, 'blogspage',blogPage,'blogsperpage', blogsPerPage);
-    if(loading){
-        return <Loader/>
+
+
+    const handleOpenModal = (id) => {
+        setBlogId(id)
+        openModal()
+    }
+
+
+    if (loading) {
+        return <Loader />
     }
 
     return (
         <div className="py-5 w-[95%] mx-auto">
-            <ScrollToTop/>
+            <ScrollToTop />
+
             <Helmet>
                 <title>Manage Blogs | Blog Express</title>
             </Helmet>
@@ -46,7 +79,7 @@ const ManageBlogs = () => {
                     <tbody>
                         {result?.length > 0 ? (
                             result.map((item, index) => (
-                                <BlogsData key={item._id} blogs={item} index={index} />
+                                <BlogsData key={item._id} handleOpenModal={handleOpenModal} blogs={item} index={index} />
                             ))
                         ) : (
                             <tr>
@@ -58,38 +91,16 @@ const ManageBlogs = () => {
                     </tbody>
                 </table>
 
-                {totalPages > 1 && <div className="flex justify-center mt-8">
-                    <nav className="inline-flex space-x-2">
-                        {/* Previous Button */}
-                        <button
-                            onClick={() => handlePageChange(blogPage - 1)}
-                            disabled={blogPage === 1}
-                            className="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 disabled:opacity-50"
-                        >
-                            Previous
-                        </button>
+                <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
+                    {
+                        blogId && <ViewBlog id={blogId} />
+                    }
+                </Modal>
 
-                        {/* Page Numbers */}
-                        {
-                            pages.map((item, i) => <button
-                                key={i}
-                                onClick={() => handlePageChange(item + 1)}
-                                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                            >
-                                {item + 1}
-                            </button>)
-                        }
+                {
+                    totalPages > 1 && <PaginationButton handlePageChange={handlePageChange} page={page} pages={pages} totalPages={totalPages} />
 
-                        {/* Next Button */}
-                        <button
-                            onClick={() => handlePageChange(blogPage + 1)}
-                            disabled={blogPage === totalPages}
-                            className="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300 disabled:opacity-50"
-                        >
-                            Next
-                        </button>
-                    </nav>
-                </div>}
+                }
             </div>
         </div>
     );

@@ -13,7 +13,7 @@ import { Helmet } from "react-helmet-async";
 import ScrollToTop from "../../../components/ScrollToTop";
 
 const AddBlogs = () => {
-    const { imageUpload, postBlog, role } = useContext(DataContext)
+    const { imageUpload, postBlog, role, refetchBlogs } = useContext(DataContext)
     const { user } = useContext(AuthContext)
     const [content, setContent] = useState('');
     const { register, handleSubmit } = useForm()
@@ -39,10 +39,11 @@ const AddBlogs = () => {
                     author: {
                         name: user?.displayName || 'unknown',
                         email: user?.email,
-                        profileImage: user?.photoUrl || 'https://i.ibb.co.com/zFMrg3c/avatar.png'
+                        profileImage: user?.photoURL || 'https://i.ibb.co.com/zFMrg3c/avatar.png'
                     },
                     views: 0,
                     postAt: new Date(),
+                    updateAt: role === 'admin' ? new Date() : null,
                     likesCount: 0,
                     commentsCount: 0,
                     approved: role === 'admin',
@@ -57,6 +58,7 @@ const AddBlogs = () => {
                         if (data.acknowledged) {
                             toast.success('Blog posted successfully!')
                             navigate('/dashboard/my-blogs')
+                            refetchBlogs()
                         }
                     }
                 });
@@ -73,7 +75,7 @@ const AddBlogs = () => {
 
     return (
         <div className="py-5 h-full w-[95%] mx-auto">
-            <ScrollToTop/>
+            <ScrollToTop />
             <Helmet>
                 <title>Add Blog | Blog Express</title>
             </Helmet>

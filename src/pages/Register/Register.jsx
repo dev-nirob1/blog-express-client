@@ -43,7 +43,7 @@ const Register = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-50">
-            <ScrollToTop/>
+            <ScrollToTop />
             <Helmet>
                 <title>Register | Blog Express</title>
             </Helmet>
@@ -103,7 +103,7 @@ const Register = () => {
                         Already have an account? <Link className="hover:underline text-blue-500" to="/login">Login</Link>
                     </p>
                     <p className="text-sm text-blue-500 hover:underline">
-                        <Link to="/forgot-password">Forgot Password?</Link>
+                        <Link>Forgot Password?</Link>
                     </p>
                 </div>
 

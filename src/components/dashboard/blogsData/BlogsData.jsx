@@ -2,15 +2,21 @@ import { useContext } from "react";
 import { FaEye } from "react-icons/fa6";
 import { DataContext } from "../../../provider/AppContext";
 import { toast } from "react-toastify";
-import Modal from "../../Modal/Modal";
-import {Helmet} from 'react-helmet-async'
-const BlogsData = ({ blogs }) => {
+import { Helmet } from 'react-helmet-async'
+
+const BlogsData = ({ blogs, handleOpenModal }) => {
     const { _id, title, titleImage, author, status, editorsPick } = blogs
-    const { isModalOpen, closeModal, openModal, updateApproveStatus, updateDenyStatus, updateEditorsPickStatus, refetchBlogs } = useContext(DataContext)
 
-    const handleUpdateApprove = (blogId) => {
+    const { 
+        updateApproveStatus,
+        updateDenyStatus,
+        updateEditorsPickStatus,
+        refetchBlogs } = useContext(DataContext)
 
-        updateApproveStatus({ id: blogId })
+
+    const handleUpdateApprove = (_id) => {
+
+        updateApproveStatus({ id: _id })
             .then(res => {
                 // console.log(res)
                 if (res?.modifiedCount === 1) {
@@ -20,8 +26,8 @@ const BlogsData = ({ blogs }) => {
             })
     }
 
-    const handleUpdateDeny = (blogId) => {
-        updateDenyStatus({ id: blogId })
+    const handleUpdateDeny = (_id) => {
+        updateDenyStatus({ id: _id })
             .then(res => {
                 // console.log(res)
                 if (res?.modifiedCount === 1) {
@@ -64,6 +70,8 @@ const BlogsData = ({ blogs }) => {
             .catch(err => console.log(err))
     }
 
+
+
     return (
         <tr className="w-full text-neutral-600 font-medium border-b">
             <Helmet>
@@ -101,12 +109,13 @@ const BlogsData = ({ blogs }) => {
 
                     <option className="bg-red-500 text-white cursor-pointer" value="deny">Deny</option>
 
-                    {/* <option className="cursor-pointer" value="admin">Delete</option> */}
                 </select>
             </td>
             <td className="p-2 flex gap-4 items-center justify-center">
                 <div className="border text-blue-500 rounded p-1 cursor-pointer">
-                    <button className="flex items-center justify-center" onClick={openModal}><FaEye size={22} /></button>
+                    <button className="flex items-center justify-center" onClick={() => handleOpenModal(_id)}>
+                        <FaEye size={22} />
+                    </button>
                 </div>
 
                 <div className="flex flex-col">
@@ -131,9 +140,7 @@ const BlogsData = ({ blogs }) => {
                         Not Picked
                     </label>
                 </div>
-                <Modal isModalOpen={isModalOpen} closeModal={closeModal}>
-
-                </Modal>
+                
             </td>
         </tr >
     );

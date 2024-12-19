@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 const PopularPost = () => {
     const { data: popular = [], isLoading } = useQuery({
-        queryKey: ["stats"],
+        queryKey: ["blogs", 'random-blogs'],
         queryFn: async () => {
             const res = await axios.get(`${import.meta.env.VITE_APIURL}/random-blogs`);
             return res.data;

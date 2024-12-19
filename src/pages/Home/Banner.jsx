@@ -39,7 +39,7 @@ const Banner = () => {
                 <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{
-                        backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 55, 0.5), rgba(0, 0, 15, 0.5)), url('/banner.jpg')",
+                        backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 55, 0.1), rgba(0, 0, 15, 0.1)), url('/banner.jpg')",
                     }}
                 >
                     <div className="flex items-center justify-center h-full">
