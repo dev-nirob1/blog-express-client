@@ -10,6 +10,10 @@ Blog Express is a responsive, multi-page single-page application (SPA) designed 
 
 [Server](https://github.com/dev-nirob1/blog-express-server)
 
+## Admin Credential
+- **Gmail: blogExpress@gmail.com
+- ** Password: BlogExpress
+
 ## Key Features
 
 - **Responsive Design:** Fully responsive website accessible on all devices.

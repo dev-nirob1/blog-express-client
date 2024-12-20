@@ -1,40 +1,46 @@
 import { FaEdit, FaHome, FaUsers } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { TbLogout2 } from "react-icons/tb";
 import { MdOutlineLibraryBooks } from "react-icons/md";
 import { useContext } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
+import { ImStatsBars } from "react-icons/im";
 
 const Admin = () => {
     const { logOut } = useContext(AuthContext)
     return (
         <div className="py-8 px-5">
-            <ul className="space-y-2 text-lg md:text-xl font-semibold">
+            <ul className="text-lg md:text-xl font-semibold">
                 <li className="border-b">
-                    <Link to={`/dashboard/admin`} className="py-2 hover:bg-gray-50 flex gap-3">
-                        <FaHome size={25} /> Discover
-                    </Link>
+                    <NavLink to={`/`} className={({ isActive }) => `${isActive && 'bg-slate-100'} p-2 my-1 hover:bg-slate-50 flex items-center gap-3 rounded`}>
+                        <FaHome size={25} /> Home
+                    </NavLink>
                 </li>
                 <li className="border-b">
-                    <Link to="/dashboard/my-blogs" className="py-2 hover:bg-gray-50 flex items-center gap-3">
+                    <NavLink to={`/dashboard/admin`} className={({ isActive }) => `${isActive && 'bg-slate-100'} p-2 my-1 hover:bg-slate-50 flex items-center gap-3 rounded`}>
+                    <ImStatsBars size={25} /> Overview
+                    </NavLink>
+                </li>
+                <li className="border-b">
+                    <NavLink to="/dashboard/my-blogs" className={({ isActive }) => `${isActive && 'bg-slate-100'} p-2 my-1 hover:bg-slate-50 flex items-center gap-3 rounded`}>
                         <MdOutlineLibraryBooks size={25} /> My Blogs
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className="border-b">
-                    <Link to="/dashboard/manage-users" className="py-2 hover:bg-gray-50 flex items-center gap-3">
+                    <NavLink to="/dashboard/manage-users" className={({ isActive }) => `${isActive && 'bg-slate-100'} p-2 my-1 hover:bg-slate-50 flex items-center gap-3 rounded`}>
                         <FaUsers />Manage Users
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className="border-b">
-                    <Link to="/dashboard/manage-blogs" className="py-2 hover:bg-gray-50 flex items-center gap-3">
+                    <NavLink to="/dashboard/manage-blogs" className={({ isActive }) => `${isActive && 'bg-slate-100'} p-2 my-1 hover:bg-slate-50 flex items-center gap-3 rounded`}>
                         <MdOutlineLibraryBooks size={25} />
                         Manage Blogs
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className="border-b">
-                    <Link to="/dashboard/add-blog" className="py-2 hover:bg-gray-50 flex items-center gap-3">
+                    <NavLink to="/dashboard/add-blog" className={({ isActive }) => `${isActive && 'bg-slate-100'} p-2 my-1 hover:bg-slate-50 flex items-center gap-3 rounded`}>
                         <FaEdit size={25} /> Add Blog
-                    </Link>
+                    </NavLink>
                 </li>
 
             </ul>
