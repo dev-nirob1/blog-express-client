@@ -52,7 +52,7 @@ const Banner = () => {
                                     value={searchInput}
                                     onChange={handleSearchChange}
                                 />
-                                <button className="px-10 py-3 rounded-r-md bg-[#040404] font-medium text-gray-200 hover:bg-neutral-900">
+                                <button className="px-6 md:px-10 py-2 md:py-3 rounded-r-md bg-[#040404] font-medium text-gray-200 hover:bg-neutral-900">
                                     Search
                                 </button>
                             </div>

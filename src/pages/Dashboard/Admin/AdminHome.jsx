@@ -19,6 +19,7 @@ const AdminHome = () => {
     const userChartData = [
         { name: "Admin", value: stats.totalAdmin || 0 },
         { name: "Author", value: stats.totalAuthor || 0 },
+        { name: "User", value: stats.normalUser || 0 },
     ];
 
     const blogChartData = [

@@ -22,8 +22,8 @@ const Footer = () => {
 
                 <div className="w-full md:w-2/4">
                     <h4 className="mb-3">Subscribe to Our Newsletter</h4>
-                    <div className="flex items-center">
-                        <input type="email" placeholder="Your email" className="max-w-md bg-gray-100 text-black py-2 px-3 rounded-l-md focus:outline-none" />
+                    <div className="flex items-center flex-wrap">
+                        <input type="email" placeholder="Your email" className="max-w-sm md:max-w-md bg-gray-100 text-black py-2 px-3 rounded-l-md focus:outline-none" />
                         <button className="bg-blue-600 text-white py-2 px-4 rounded-r-md focus:outline-none">Subscribe</button>
                     </div>
                 </div>
